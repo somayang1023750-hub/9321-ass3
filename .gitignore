@@ -1,0 +1,8 @@
+__pycache__/
+.pytest_cache/
+.venv/
+.venvs/
+.ipynb_checkpoints/
+catboost_info/
+*.cbm
+*.joblib
