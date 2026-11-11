@@ -152,3 +152,51 @@ def test_notebook_is_executed_and_within_submission_limit():
             "outputs"
         ), "Expected visible analysis evidence in each code cell"
         assert not any(output["output_type"] == "error" for output in cell["outputs"])
+
+
+def _load_proposal_experiment():
+    path = MODULE.parent / "experiments" / "proposal_validation.py"
+    module_spec = importlib.util.spec_from_file_location("proposal_experiment", path)
+    module = importlib.util.module_from_spec(module_spec)
+    module_spec.loader.exec_module(module)
+    return module
+
+
+def test_proposal_frequency_does_not_learn_from_validation_batches(movies):
+    proposal = _load_proposal_experiment()
+    fitting = movies.iloc[:4].copy()
+    fitting["director"] = ["A", "A", "B", None]
+    validation = movies.iloc[:3].copy()
+    validation["director"] = ["A", "UNSEEN", None]
+    first = proposal.feature_frame(fitting, ("missing", "release"))
+    second = proposal.feature_frame(validation, ("missing", "release"))
+    _, encoded, maps = proposal.add_frequency(first, second)
+    larger = pd.concat([validation] * 10, ignore_index=True)
+    _, encoded_larger, other_maps = proposal.add_frequency(
+        first, proposal.feature_frame(larger, ("missing", "release"))
+    )
+    pd.testing.assert_frame_equal(
+        encoded.reset_index(drop=True), encoded_larger.iloc[:3].reset_index(drop=True)
+    )
+    assert encoded.director_freq.tolist() == [2.0, 0.0, 0.0]
+    for name in maps:
+        pd.testing.assert_series_equal(maps[name], other_maps[name])
+    assert "director_freq" not in first.columns
+
+
+def test_proposal_features_ignore_targets_and_handle_missing_ratios(movies):
+    proposal = _load_proposal_experiment()
+    data = movies.copy()
+    data.loc[0, ["budget", "runtime"]] = [1.0, 100.0]
+    data.loc[1, "budget"] = 0
+    data.loc[2, "runtime"] = np.nan
+    features = proposal.feature_frame(data, ("missing", "release"))
+    blind = data.drop(columns=list(solution.EXCLUDED_COLUMNS))
+    pd.testing.assert_frame_equal(
+        features, proposal.feature_frame(blind, ("missing", "release"))
+    )
+    assert features.loc[0, "budget_per_runtime"] < 0
+    assert features.loc[0, "budget_per_runtime_missing"] == 0
+    assert features.loc[1, "budget_per_runtime"] == -99
+    assert features.loc[2, "budget_per_runtime_missing"] == 1
+    assert not np.isinf(features.select_dtypes(include="number").to_numpy()).any()

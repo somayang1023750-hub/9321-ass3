@@ -75,3 +75,5 @@ python experiments/regression_validation.py <train_file> --output /tmp/regressio
 该开发工具比较基线与最终回归模型，运行两次固定划分和 Bootstrap；其运行时间不属于正式提交脚本的两分钟计时。Notebook 中包含同样的复核代码和实际输出。
 
 稳健性和预算缺失补充诊断见 [ROBUSTNESS_DIAGNOSTICS.md](ROBUSTNESS_DIAGNOSTICS.md)。可运行 `python experiments/robustness_validation.py <train_file> --output /tmp/robustness.json` 复核。正式模型暂不采用整体分数更差的降权或插补方案。
+
+上传修改意见的逐项评估见 [PROPOSAL_REVIEW.md](PROPOSAL_REVIEW.md)。本轮未发现两个既有划分均改善的配置，正式模型与预测CSV保留。可用 `experiments/proposal_validation.py` 重现消融；完整实验是开发流程，不属于正式脚本的两分钟计时。

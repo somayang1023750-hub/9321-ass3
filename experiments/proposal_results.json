@@ -1,0 +1,580 @@
+{
+  "reference_commit": "8406404",
+  "reference_RMSLE": {
+    "42": 1.8640376891078698,
+    "2026": 1.7601118292137785
+  },
+  "proposal_sha256": "fabe135e825de58968bd078e3090420efad528c497a079fd3413ea9a3a3619b3",
+  "primary_split_rows": 3201,
+  "validation_policy": "All rows included; no test targets; frequency maps fit only on fitting rows.",
+  "qualified_on_both_splits": [],
+  "results": [
+    {
+      "seed": 42,
+      "name": "missing",
+      "cat_weight": 0.5,
+      "RMSLE": 1.8653364890016002,
+      "seconds": 25.6372909740021,
+      "component_times": {
+        "cat_seconds": 21.8507570949987,
+        "lightgbm_seconds": 2.3483329039991077
+      },
+      "budget_unknown": 2.327434182772744,
+      "revenue_le_1000": 5.713292832226689,
+      "other": 1.556317766669716
+    },
+    {
+      "seed": 42,
+      "name": "missing",
+      "cat_weight": 0.65,
+      "RMSLE": 1.8651465994311014,
+      "seconds": 25.6372909740021,
+      "component_times": {
+        "cat_seconds": 21.8507570949987,
+        "lightgbm_seconds": 2.3483329039991077
+      },
+      "budget_unknown": 2.3276205521443716,
+      "revenue_le_1000": 5.730563227174618,
+      "other": 1.5537776418646274
+    },
+    {
+      "seed": 42,
+      "name": "frequency",
+      "cat_weight": 0.5,
+      "RMSLE": 1.86014173352214,
+      "seconds": 24.302661223999166,
+      "component_times": {
+        "cat_seconds": 20.428414619997056,
+        "lightgbm_seconds": 2.493669920000684
+      },
+      "budget_unknown": 2.319185514840799,
+      "revenue_le_1000": 5.627141870532944,
+      "other": 1.56124749000972
+    },
+    {
+      "seed": 42,
+      "name": "frequency",
+      "cat_weight": 0.65,
+      "RMSLE": 1.8588568117934403,
+      "seconds": 24.302661223999166,
+      "component_times": {
+        "cat_seconds": 20.428414619997056,
+        "lightgbm_seconds": 2.493669920000684
+      },
+      "budget_unknown": 2.318245391569493,
+      "revenue_le_1000": 5.631846841892458,
+      "other": 1.5590449495570393
+    },
+    {
+      "seed": 42,
+      "name": "release",
+      "cat_weight": 0.5,
+      "RMSLE": 1.8651826266345406,
+      "seconds": 23.239795019999292,
+      "component_times": {
+        "cat_seconds": 18.826368248999643,
+        "lightgbm_seconds": 3.0058960809983546
+      },
+      "budget_unknown": 2.328892999205788,
+      "revenue_le_1000": 5.717659277614381,
+      "other": 1.55554507372831
+    },
+    {
+      "seed": 42,
+      "name": "release",
+      "cat_weight": 0.65,
+      "RMSLE": 1.8645850805675643,
+      "seconds": 23.239795019999292,
+      "component_times": {
+        "cat_seconds": 18.826368248999643,
+        "lightgbm_seconds": 3.0058960809983546
+      },
+      "budget_unknown": 2.32983729845178,
+      "revenue_le_1000": 5.73419205242814,
+      "other": 1.552593398323643
+    },
+    {
+      "seed": 42,
+      "name": "frequency_release",
+      "cat_weight": 0.5,
+      "RMSLE": 1.8612636569340724,
+      "seconds": 24.940460195000924,
+      "component_times": {
+        "cat_seconds": 19.622372011999687,
+        "lightgbm_seconds": 3.978804989998025
+      },
+      "budget_unknown": 2.319825472170793,
+      "revenue_le_1000": 5.636072783227434,
+      "other": 1.5614650326234207
+    },
+    {
+      "seed": 42,
+      "name": "frequency_release",
+      "cat_weight": 0.65,
+      "RMSLE": 1.8599927946861834,
+      "seconds": 24.940460195000924,
+      "component_times": {
+        "cat_seconds": 19.622372011999687,
+        "lightgbm_seconds": 3.978804989998025
+      },
+      "budget_unknown": 2.317880608625427,
+      "revenue_le_1000": 5.6305633790386835,
+      "other": 1.5606162172036016
+    },
+    {
+      "seed": 42,
+      "name": "all_features",
+      "cat_weight": 0.5,
+      "RMSLE": 1.8611165068044877,
+      "seconds": 21.875441878997663,
+      "component_times": {
+        "cat_seconds": 18.18248596199919,
+        "lightgbm_seconds": 2.3364214339999307
+      },
+      "budget_unknown": 2.3186785496371534,
+      "revenue_le_1000": 5.632739248470843,
+      "other": 1.561719391728677
+    },
+    {
+      "seed": 42,
+      "name": "all_features",
+      "cat_weight": 0.65,
+      "RMSLE": 1.8593348623201507,
+      "seconds": 21.875441878997663,
+      "component_times": {
+        "cat_seconds": 18.18248596199919,
+        "lightgbm_seconds": 2.3364214339999307
+      },
+      "budget_unknown": 2.3155420193748535,
+      "revenue_le_1000": 5.6290550220293,
+      "other": 1.5600009518366256
+    },
+    {
+      "seed": 42,
+      "name": "all_regularized_ctr1",
+      "cat_weight": 0.5,
+      "RMSLE": 1.8565915673060152,
+      "seconds": 26.599333127000136,
+      "component_times": {
+        "cat_seconds": 21.68209074799961,
+        "lightgbm_seconds": 3.419471549001173
+      },
+      "budget_unknown": 2.307588340925383,
+      "revenue_le_1000": 5.596626433733468,
+      "other": 1.56084543626046
+    },
+    {
+      "seed": 42,
+      "name": "all_regularized_ctr1",
+      "cat_weight": 0.65,
+      "RMSLE": 1.8582356280468335,
+      "seconds": 26.599333127000136,
+      "component_times": {
+        "cat_seconds": 21.68209074799961,
+        "lightgbm_seconds": 3.419471549001173
+      },
+      "budget_unknown": 2.3099945360175522,
+      "revenue_le_1000": 5.604529331630869,
+      "other": 1.5618443358589258
+    },
+    {
+      "seed": 42,
+      "name": "all_regularized_ctr2",
+      "cat_weight": 0.5,
+      "RMSLE": 1.8602450200449325,
+      "seconds": 61.43993069499993,
+      "component_times": {
+        "cat_seconds": 57.596860567002295,
+        "lightgbm_seconds": 2.562195218000852
+      },
+      "budget_unknown": 2.3153179596618165,
+      "revenue_le_1000": 5.602089837391213,
+      "other": 1.5646379000273845
+    },
+    {
+      "seed": 42,
+      "name": "all_regularized_ctr2",
+      "cat_weight": 0.65,
+      "RMSLE": 1.8626810032014838,
+      "seconds": 61.43993069499993,
+      "component_times": {
+        "cat_seconds": 57.596860567002295,
+        "lightgbm_seconds": 2.562195218000852
+      },
+      "budget_unknown": 2.3196509793555333,
+      "revenue_le_1000": 5.6108517363137125,
+      "other": 1.5665016332254664
+    },
+    {
+      "seed": 42,
+      "name": "regularized_only",
+      "cat_weight": 0.5,
+      "RMSLE": 1.8640155362935404,
+      "seconds": 29.64108227199904,
+      "component_times": {
+        "cat_seconds": 25.0631582399983,
+        "lightgbm_seconds": 3.229112927998358
+      },
+      "budget_unknown": 2.321863778405362,
+      "revenue_le_1000": 5.725429624929142,
+      "other": 1.5530571282991947
+    },
+    {
+      "seed": 42,
+      "name": "regularized_only",
+      "cat_weight": 0.65,
+      "RMSLE": 1.8650699467494483,
+      "seconds": 29.64108227199904,
+      "component_times": {
+        "cat_seconds": 25.0631582399983,
+        "lightgbm_seconds": 3.229112927998358
+      },
+      "budget_unknown": 2.324399079921201,
+      "revenue_le_1000": 5.741930064974572,
+      "other": 1.552159928291204
+    },
+    {
+      "seed": 42,
+      "name": "frequency_regularized",
+      "cat_weight": 0.5,
+      "RMSLE": 1.8598593204359848,
+      "seconds": 21.500821690999146,
+      "component_times": {
+        "cat_seconds": 17.431395961000817,
+        "lightgbm_seconds": 2.6743800590011233
+      },
+      "budget_unknown": 2.3151152613444843,
+      "revenue_le_1000": 5.609379954876218,
+      "other": 1.5632150984865865
+    },
+    {
+      "seed": 42,
+      "name": "frequency_regularized",
+      "cat_weight": 0.65,
+      "RMSLE": 1.860430128911061,
+      "seconds": 21.500821690999146,
+      "component_times": {
+        "cat_seconds": 17.431395961000817,
+        "lightgbm_seconds": 2.6743800590011233
+      },
+      "budget_unknown": 2.3172200795934117,
+      "revenue_le_1000": 5.620197669397599,
+      "other": 1.5625099961277347
+    },
+    {
+      "seed": 42,
+      "name": "literal_full_ctr2",
+      "cat_weight": 0.5,
+      "RMSLE": 1.8599478473074584,
+      "seconds": 62.86435775100108,
+      "component_times": {
+        "cat_seconds": 58.95708124900193,
+        "lightgbm_seconds": 2.462666100000206
+      },
+      "budget_unknown": 2.309682715770771,
+      "revenue_le_1000": 5.589845875403061,
+      "other": 1.565859079502434
+    },
+    {
+      "seed": 42,
+      "name": "literal_full_ctr2",
+      "cat_weight": 0.65,
+      "RMSLE": 1.8630210676556003,
+      "seconds": 62.86435775100108,
+      "component_times": {
+        "cat_seconds": 58.95708124900193,
+        "lightgbm_seconds": 2.462666100000206
+      },
+      "budget_unknown": 2.315645860973574,
+      "revenue_le_1000": 5.606863312266425,
+      "other": 1.5674381929981098
+    },
+    {
+      "seed": 42,
+      "name": "literal_full_ctr1",
+      "cat_weight": 0.5,
+      "RMSLE": 1.8567707440670593,
+      "seconds": 24.48300010800085,
+      "component_times": {
+        "cat_seconds": 20.317713208001805,
+        "lightgbm_seconds": 2.7153664479992585
+      },
+      "budget_unknown": 2.303215417988205,
+      "revenue_le_1000": 5.585683840529347,
+      "other": 1.562486660676184
+    },
+    {
+      "seed": 42,
+      "name": "literal_full_ctr1",
+      "cat_weight": 0.65,
+      "RMSLE": 1.8591394670813535,
+      "seconds": 24.48300010800085,
+      "component_times": {
+        "cat_seconds": 20.317713208001805,
+        "lightgbm_seconds": 2.7153664479992585
+      },
+      "budget_unknown": 2.307690007277762,
+      "revenue_le_1000": 5.6016596392541835,
+      "other": 1.5633315217406505
+    },
+    {
+      "seed": 2026,
+      "name": "frequency",
+      "cat_weight": 0.5,
+      "RMSLE": 1.765341554822339,
+      "seconds": 32.87704767900141,
+      "component_times": {
+        "cat_seconds": 27.1397594739974,
+        "lightgbm_seconds": 4.16610362999927
+      },
+      "budget_unknown": 2.1380608834931323,
+      "revenue_le_1000": 5.0903341714425165,
+      "other": 1.579434720720682
+    },
+    {
+      "seed": 2026,
+      "name": "frequency",
+      "cat_weight": 0.65,
+      "RMSLE": 1.763364928234443,
+      "seconds": 32.87704767900141,
+      "component_times": {
+        "cat_seconds": 27.1397594739974,
+        "lightgbm_seconds": 4.16610362999927
+      },
+      "budget_unknown": 2.1323703603938244,
+      "revenue_le_1000": 5.102820586555167,
+      "other": 1.5760637457030462
+    },
+    {
+      "seed": 2026,
+      "name": "all_regularized_ctr1",
+      "cat_weight": 0.5,
+      "RMSLE": 1.7670857548111552,
+      "seconds": 41.991992539999046,
+      "component_times": {
+        "cat_seconds": 35.298469209999894,
+        "lightgbm_seconds": 3.943536114999006
+      },
+      "budget_unknown": 2.140375796945483,
+      "revenue_le_1000": 4.977040944898926,
+      "other": 1.5912436493316793
+    },
+    {
+      "seed": 2026,
+      "name": "all_regularized_ctr1",
+      "cat_weight": 0.65,
+      "RMSLE": 1.767035926469565,
+      "seconds": 41.991992539999046,
+      "component_times": {
+        "cat_seconds": 35.298469209999894,
+        "lightgbm_seconds": 3.943536114999006
+      },
+      "budget_unknown": 2.1349468406133947,
+      "revenue_le_1000": 4.989918571025015,
+      "other": 1.5900862315236848
+    },
+    {
+      "seed": 2026,
+      "name": "frequency_release",
+      "cat_weight": 0.5,
+      "RMSLE": 1.7648712692426092,
+      "seconds": 25.3305050759991,
+      "component_times": {
+        "cat_seconds": 21.01106325300134,
+        "lightgbm_seconds": 2.800777376996848
+      },
+      "budget_unknown": 2.1359239429460395,
+      "revenue_le_1000": 5.0825385881526595,
+      "other": 1.5795796357173657
+    },
+    {
+      "seed": 2026,
+      "name": "frequency_release",
+      "cat_weight": 0.65,
+      "RMSLE": 1.7615443283668217,
+      "seconds": 25.3305050759991,
+      "component_times": {
+        "cat_seconds": 21.01106325300134,
+        "lightgbm_seconds": 2.800777376996848
+      },
+      "budget_unknown": 2.129046628981582,
+      "revenue_le_1000": 5.07257227042632,
+      "other": 1.576635801369193
+    },
+    {
+      "seed": 2026,
+      "name": "all_features",
+      "cat_weight": 0.5,
+      "RMSLE": 1.7655292127953917,
+      "seconds": 22.745370581000316,
+      "component_times": {
+        "cat_seconds": 18.841533096001513,
+        "lightgbm_seconds": 2.415929935999884
+      },
+      "budget_unknown": 2.1341510306352762,
+      "revenue_le_1000": 5.0396323649760575,
+      "other": 1.5840786548362988
+    },
+    {
+      "seed": 2026,
+      "name": "all_features",
+      "cat_weight": 0.65,
+      "RMSLE": 1.7637037768198152,
+      "seconds": 22.745370581000316,
+      "component_times": {
+        "cat_seconds": 18.841533096001513,
+        "lightgbm_seconds": 2.415929935999884
+      },
+      "budget_unknown": 2.1279437976733746,
+      "revenue_le_1000": 5.031761089899963,
+      "other": 1.5826716516075792
+    },
+    {
+      "seed": 2026,
+      "name": "regularized_only",
+      "cat_weight": 0.5,
+      "RMSLE": 1.7638912158611795,
+      "seconds": 25.257191513999715,
+      "component_times": {
+        "cat_seconds": 21.024624100999063,
+        "lightgbm_seconds": 2.7127135330010788
+      },
+      "budget_unknown": 2.1331287216272674,
+      "revenue_le_1000": 5.079066177818287,
+      "other": 1.5787595262271457
+    },
+    {
+      "seed": 2026,
+      "name": "regularized_only",
+      "cat_weight": 0.65,
+      "RMSLE": 1.7640057159746503,
+      "seconds": 25.257191513999715,
+      "component_times": {
+        "cat_seconds": 21.024624100999063,
+        "lightgbm_seconds": 2.7127135330010788
+      },
+      "budget_unknown": 2.128401956023431,
+      "revenue_le_1000": 5.112379002243118,
+      "other": 1.5759553846872378
+    },
+    {
+      "seed": 2026,
+      "name": "all_regularized_ctr2",
+      "cat_weight": 0.5,
+      "RMSLE": 1.7725486176012186,
+      "seconds": 70.4377378829995,
+      "component_times": {
+        "cat_seconds": 66.15997894400061,
+        "lightgbm_seconds": 2.752287534000061
+      },
+      "budget_unknown": 2.1465861034566918,
+      "revenue_le_1000": 4.980491995504881,
+      "other": 1.5971796900210498
+    },
+    {
+      "seed": 2026,
+      "name": "all_regularized_ctr2",
+      "cat_weight": 0.65,
+      "RMSLE": 1.7737321219178932,
+      "seconds": 70.4377378829995,
+      "component_times": {
+        "cat_seconds": 66.15997894400061,
+        "lightgbm_seconds": 2.752287534000061
+      },
+      "budget_unknown": 2.1420809072713727,
+      "revenue_le_1000": 4.994147810988676,
+      "other": 1.597366215612268
+    },
+    {
+      "seed": 2026,
+      "name": "literal_full_ctr2",
+      "cat_weight": 0.5,
+      "RMSLE": 1.7727402838274238,
+      "seconds": 67.99297469799785,
+      "component_times": {
+        "cat_seconds": 63.15281743200103,
+        "lightgbm_seconds": 3.383274160001747
+      },
+      "budget_unknown": 2.1414710050147714,
+      "revenue_le_1000": 4.951307647219089,
+      "other": 1.5998711780345614
+    },
+    {
+      "seed": 2026,
+      "name": "literal_full_ctr2",
+      "cat_weight": 0.65,
+      "RMSLE": 1.773131905850163,
+      "seconds": 67.99297469799785,
+      "component_times": {
+        "cat_seconds": 63.15281743200103,
+        "lightgbm_seconds": 3.383274160001747
+      },
+      "budget_unknown": 2.1362328419312133,
+      "revenue_le_1000": 4.977039506323859,
+      "other": 1.598138079777178
+    },
+    {
+      "seed": 2026,
+      "name": "literal_full_ctr1",
+      "cat_weight": 0.5,
+      "RMSLE": 1.7678417138664742,
+      "seconds": 23.720501944000716,
+      "component_times": {
+        "cat_seconds": 19.307076771001448,
+        "lightgbm_seconds": 2.7502230209975096
+      },
+      "budget_unknown": 2.1376927164173787,
+      "revenue_le_1000": 4.942276710666186,
+      "other": 1.595057421575767
+    },
+    {
+      "seed": 2026,
+      "name": "literal_full_ctr1",
+      "cat_weight": 0.65,
+      "RMSLE": 1.7672698516571006,
+      "seconds": 23.720501944000716,
+      "component_times": {
+        "cat_seconds": 19.307076771001448,
+        "lightgbm_seconds": 2.7502230209975096
+      },
+      "budget_unknown": 2.1320377701160202,
+      "revenue_le_1000": 4.9659674366799775,
+      "other": 1.5923970116900958
+    },
+    {
+      "seed": 2026,
+      "name": "frequency_regularized",
+      "cat_weight": 0.5,
+      "RMSLE": 1.768216289296016,
+      "seconds": 29.79332974600038,
+      "component_times": {
+        "cat_seconds": 24.7344397880006,
+        "lightgbm_seconds": 3.5013971169973956
+      },
+      "budget_unknown": 2.146183426000697,
+      "revenue_le_1000": 5.044326339287868,
+      "other": 1.5867477594416988
+    },
+    {
+      "seed": 2026,
+      "name": "frequency_regularized",
+      "cat_weight": 0.65,
+      "RMSLE": 1.7673486149245183,
+      "seconds": 29.79332974600038,
+      "component_times": {
+        "cat_seconds": 24.7344397880006,
+        "lightgbm_seconds": 3.5013971169973956
+      },
+      "budget_unknown": 2.140078238592286,
+      "revenue_le_1000": 5.072158897288409,
+      "other": 1.5833307579500837
+    }
+  ],
+  "decision": "Retain existing production model and CSV files.",
+  "limitations": [
+    "Existing splits already used for development; not fresh independent test sets.",
+    "Missing-only and release-only variants rejected after primary split; not repeated with seed 2026.",
+    "No candidate passed both selection splits, so no further split was used to fish for a passing score.",
+    "Standalone submission runtime not measured for rejected variants; component times are not the full CLI budget."
+  ]
+}
