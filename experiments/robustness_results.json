@@ -1,0 +1,135 @@
+{
+  "seed": 42,
+  "fitting_rows": 12803,
+  "validation_rows": 3201,
+  "metric": "unweighted RMSLE on every validation row",
+  "results": [
+    {
+      "name": "current",
+      "RMSLE": 1.8640376891078698,
+      "seconds": null,
+      "tiny": 5.726687532939832,
+      "other": 1.5529165165253533,
+      "unknown_budget": 2.3239228431671513,
+      "known_budget": 1.4734802170796477,
+      "timing_note": "Reused primary-split predictions; not timed in this experiment row."
+    },
+    {
+      "name": "tiny_weight_0",
+      "RMSLE": 1.9943692722931083,
+      "seconds": 25.86462199699963,
+      "tiny": 7.243533966780863,
+      "other": 1.4897406577965158,
+      "unknown_budget": 2.3877681139254925,
+      "known_budget": 1.6765335047743357
+    },
+    {
+      "name": "tiny_weight_0.25",
+      "RMSLE": 1.8874140987694843,
+      "seconds": 22.593303434001427,
+      "tiny": 6.249675978562697,
+      "other": 1.5084179770391177,
+      "unknown_budget": 2.359681773014598,
+      "known_budget": 1.4848707884765597
+    },
+    {
+      "name": "tiny_weight_0.5",
+      "RMSLE": 1.8728563201165,
+      "seconds": 20.4127134449991,
+      "tiny": 6.001271097435347,
+      "other": 1.5260858556019596,
+      "unknown_budget": 2.3436073008542997,
+      "known_budget": 1.4711285305787958
+    },
+    {
+      "name": "huber_1.0",
+      "RMSLE": 1.9620855942740414,
+      "seconds": 19.894740527000977,
+      "tiny": 6.6040562325610015,
+      "other": 1.5517851557118387,
+      "unknown_budget": 2.4396786139570854,
+      "known_budget": 1.5578793772664028
+    },
+    {
+      "name": "huber_2.0",
+      "RMSLE": 1.952424456289168,
+      "seconds": 28.07660553799724,
+      "tiny": 6.550767296744082,
+      "other": 1.5473410125099578,
+      "unknown_budget": 2.4332084960028584,
+      "known_budget": 1.5443160884239724
+    },
+    {
+      "name": "model_budget_imputation",
+      "RMSLE": 1.8682298272366926,
+      "seconds": 23.20402882000053,
+      "tiny": 5.687653235086534,
+      "other": 1.5633034970676827,
+      "unknown_budget": 2.329066971579107,
+      "known_budget": 1.476881822086747
+    },
+    {
+      "name": "OOF_top5pct_weight_0.25",
+      "RMSLE": 1.8746655904884766,
+      "seconds": 36.67992309900001,
+      "tiny": 5.953070605055997,
+      "other": 1.5352055313306128,
+      "unknown_budget": 2.3538924670825967,
+      "known_budget": 1.4638610839226067
+    }
+  ],
+  "budget_decomposition": [
+    {
+      "budget_missing": false,
+      "tiny_revenue": false,
+      "size": 1854,
+      "mean": 1.9145068659,
+      "sum": 3549.4957292937,
+      "RMSLE": 1.3836570622,
+      "overall_loss_share": 0.3191329197
+    },
+    {
+      "budget_missing": false,
+      "tiny_revenue": true,
+      "size": 55,
+      "mean": 10.8221467545,
+      "sum": 595.2180714951,
+      "RMSLE": 3.2897031408,
+      "overall_loss_share": 0.053515681
+    },
+    {
+      "budget_missing": true,
+      "tiny_revenue": false,
+      "size": 1235,
+      "mean": 3.1577176652,
+      "sum": 3899.7813165475,
+      "RMSLE": 1.7769968107,
+      "overall_loss_share": 0.3506268757
+    },
+    {
+      "budget_missing": true,
+      "tiny_revenue": true,
+      "size": 57,
+      "mean": 53.9967778894,
+      "sum": 3077.8163396969,
+      "RMSLE": 7.3482499882,
+      "overall_loss_share": 0.2767245236
+    }
+  ],
+  "budget_masking": {
+    "known_budget_rows": 1909,
+    "observed_budget_RMSLE": 1.4734802170796477,
+    "masked_budget_RMSLE": 2.1432805087928095
+  },
+  "oof_details": {
+    "OOF_threshold": 3.8803660520344896,
+    "downweighted_rows": 641,
+    "tiny_downweighted": 237
+  },
+  "limitations": [
+    "Only seed=42 evaluated for these new interventions; rejection is specific to the tested configurations.",
+    "High residual does not establish an incorrect label.",
+    "Artificial budget masking is model sensitivity, not a full causal model of real missingness.",
+    "No assignment test targets used."
+  ]
+}
