@@ -12,7 +12,7 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-原始依赖文件末尾说明 `setuptools` 被 pip-compile 作为 unsafe 包省略。若需要运行完整 Jupyter/spaCy 环境，补装 `setuptools==82.0.1`；本提交脚本只使用标准库及清单中的 NumPy、pandas、CatBoost。
+原始依赖文件末尾说明 `setuptools` 被 pip-compile 作为 unsafe 包省略。若需要运行完整 Jupyter/spaCy 环境，补装 `setuptools==82.0.1`；本提交脚本只使用标准库及清单中的 NumPy、pandas、CatBoost、LightGBM。
 
 ## 生成两份预测 CSV
 
@@ -25,7 +25,7 @@ python3 z5429763.py <train_file> <test_file>
 - `z5429763_regression.csv`：`imdb_id,revenue`
 - `z5429763_classification.csv`：`imdb_id,rating`
 
-脚本独立训练两个最终 CatBoost 模型，使用 4 个 CPU 线程，无 GPU 或外部下载。目标列不参与特征生成，测试文件可以完全没有 `revenue`、`rating` 两列。输出文件会被本次运行覆盖。
+脚本独立训练收入回归的 CatBoost＋LightGBM 对数融合模型，以及评级分类的 CatBoost 模型，使用 4 个 CPU 线程，无 GPU 或外部下载。目标列不参与特征生成，测试文件可以完全没有 `revenue`、`rating` 两列。输出文件会被本次运行覆盖。
 
 ## 重现 Notebook
 
@@ -63,3 +63,13 @@ python -m pytest tests/test_submission.py -q
 正式提交前重新确认 CSE 上的总运行时间，Notebook 小于 3MB 且保留所有输出。提供测试集和云端时间不能保证隐藏测试集成绩或 CSE 时间。
 
 题目要求 Notebook 保留全部执行输出，没有单独提交截图的要求。你仍需在 CSE 上确认正式脚本的总运行时间，并通过课程提交入口提交两份正式文件；GitHub 推送本身不等于课程提交。
+
+## 回归改进与复核
+
+训练内两次固定划分均改善，但尚未达到 RMSLE ≤1.7。实验结果、未达标原因和证据见 [REGRESSION_EXPERIMENTS.md](REGRESSION_EXPERIMENTS.md)。只读取训练文件的复核命令如下：
+
+```bash
+python experiments/regression_validation.py <train_file> --output /tmp/regression-results.json
+```
+
+该开发工具比较基线与最终回归模型，运行两次固定划分和 Bootstrap；其运行时间不属于正式提交脚本的两分钟计时。Notebook 中包含同样的复核代码和实际输出。

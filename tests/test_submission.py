@@ -39,10 +39,16 @@ def test_predictors_do_not_read_targets_or_ids(movies):
     expected = solution.preprocess(movies)
     changed = movies.drop(columns=list(solution.EXCLUDED_COLUMNS))
     pd.testing.assert_frame_equal(expected, solution.preprocess(changed))
+    pd.testing.assert_frame_equal(
+        solution.regression_preprocess(movies), solution.regression_preprocess(changed)
+    )
     changed["rating"] = "POISON"
     changed["revenue"] = -999999
     changed["imdb_id"] = "POISON"
     pd.testing.assert_frame_equal(expected, solution.preprocess(changed))
+    pd.testing.assert_frame_equal(
+        solution.regression_preprocess(movies), solution.regression_preprocess(changed)
+    )
 
 
 def test_preprocess_handles_missing_unseen_and_extreme_values(movies):
@@ -72,6 +78,16 @@ def test_predictions_ignore_test_targets_and_support_unseen_categories(
         solution,
         "CLASSIFICATION_PARAMS",
         dict(iterations=20, depth=3, learning_rate=0.1),
+    )
+    monkeypatch.setattr(
+        solution,
+        "REVENUE_CAT_PARAMS",
+        dict(iterations=20, depth=3, learning_rate=0.1, max_ctr_complexity=1),
+    )
+    monkeypatch.setattr(
+        solution,
+        "REVENUE_LGB_PARAMS",
+        dict(n_estimators=20, num_leaves=7, learning_rate=0.1, min_child_samples=5),
     )
     test = movies.iloc[:6].copy()
     test["director"] = "Unseen director"

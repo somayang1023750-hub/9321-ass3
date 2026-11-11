@@ -7,12 +7,14 @@ Only the training file is used for fitting; test targets are never read as featu
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 from time import perf_counter
 
 import numpy as np
 import pandas as pd
 from catboost import CatBoostClassifier, CatBoostRegressor
+from lightgbm import LGBMRegressor
 
 SEED = 42
 THREADS = 4
@@ -67,6 +69,22 @@ GENRES = (
 )
 REGRESSION_PARAMS = dict(iterations=650, depth=6, learning_rate=0.06, l2_leaf_reg=5)
 CLASSIFICATION_PARAMS = dict(iterations=650, depth=6, learning_rate=0.06, l2_leaf_reg=5)
+# The original regressor factory remains available for notebook comparisons.
+REVENUE_CAT_PARAMS = dict(
+    iterations=1200,
+    depth=7,
+    learning_rate=0.04,
+    l2_leaf_reg=10,
+    max_ctr_complexity=1,
+)
+REVENUE_LGB_PARAMS = dict(
+    n_estimators=276,
+    num_leaves=63,
+    learning_rate=0.025,
+    min_child_samples=20,
+    reg_lambda=20,
+    colsample_bytree=0.9,
+)
 
 
 def text_column(df: pd.DataFrame, name: str) -> pd.Series:
@@ -124,6 +142,105 @@ def preprocess(df: pd.DataFrame) -> pd.DataFrame:
     return features
 
 
+def regression_preprocess(df: pd.DataFrame) -> pd.DataFrame:
+    """Add row-wise credits and ratios; neither targets nor test statistics are used."""
+    f = preprocess(df)
+    for column, sep, count in [
+        ("cast", ",", 4),
+        ("production_companies", ",", 3),
+        ("production_countries", ",", 3),
+        ("spoken_languages", ",", 3),
+        ("writers", ",", 3),
+        ("producers", ",", 3),
+        ("keywords", "|", 4),
+        ("genres", ",", 3),
+    ]:
+        tokens = text_column(df, column).map(
+            lambda t: [q.strip() for q in t.split(sep) if q.strip()]
+        )
+        for pos in range(1, count):
+            f[f"{column}_{pos + 1}"] = tokens.map(
+                lambda v: v[pos] if len(v) > pos else "__MISSING__"
+            )
+        if column in (
+            "production_companies",
+            "production_countries",
+            "genres",
+            "spoken_languages",
+        ):
+            f[column + "_all"] = tokens.map(
+                lambda v: " | ".join(sorted(v)) if v else "__MISSING__"
+            )
+    f["release_decade"] = f.release_year // 10 * 10
+    for numerator, denominator in [
+        ("imdb_votes", "vote_count"),
+        ("popularity", "vote_count"),
+        ("budget", "runtime"),
+    ]:
+        f[numerator + "_per_" + denominator] = np.log1p(f[numerator]) - np.log1p(
+            f[denominator]
+        )
+    for col in ["budget", "vote_count", "imdb_votes", "popularity"]:
+        f[col + "_small"] = f[col].between(1, 1000).astype("int8")
+    return f
+
+
+class RevenueRegressor:
+    """Average complementary CatBoost/LightGBM predictions in log-revenue space.
+
+    Category vocabularies are learned only in fit. No validation/test labels or
+    target-derived input features are used. Parameters are fixed before the
+    second training-only split and before generating revised CSV files.
+    """
+
+    def fit(self, df: pd.DataFrame, log_revenue: np.ndarray):
+        features = regression_preprocess(df)
+        self.cat_model = CatBoostRegressor(
+            **REVENUE_CAT_PARAMS,
+            loss_function="RMSE",
+            random_seed=SEED,
+            thread_count=THREADS,
+            verbose=False,
+            allow_writing_files=False,
+        )
+        self.cat_model.fit(
+            features, log_revenue, cat_features=categorical_columns(features)
+        )
+        self.lgb_model = LGBMRegressor(
+            **REVENUE_LGB_PARAMS,
+            n_jobs=THREADS,
+            random_state=SEED,
+            verbosity=-1,
+        )
+        # LightGBM requires JSON-safe column names. Keep the mapping fixed.
+        self.feature_names = [
+            re.sub(r"[^A-Za-z0-9_]+", "_", name) for name in features.columns
+        ]
+        self.category_dtypes = {}
+        light_features = features.copy()
+        light_features.columns = self.feature_names
+        for name in categorical_columns(light_features):
+            dtype = pd.CategoricalDtype(categories=pd.unique(light_features[name]))
+            self.category_dtypes[name] = dtype
+            light_features[name] = light_features[name].astype(dtype)
+        self.lgb_model.fit(light_features, log_revenue)
+        return self
+
+    def predict(self, df: pd.DataFrame) -> np.ndarray:
+        features = regression_preprocess(df)
+        cat_prediction = self.cat_model.predict(features)
+        light_features = features.copy()
+        light_features.columns = self.feature_names
+        for name, dtype in self.category_dtypes.items():
+            # Explicitly map previously unseen values to missing, using fit-only vocabularies.
+            light_features[name] = (
+                light_features[name]
+                .where(light_features[name].isin(dtype.categories), None)
+                .astype(dtype)
+            )
+        return 0.5 * cat_prediction + 0.5 * self.lgb_model.predict(light_features)
+
+
 def categorical_columns(features: pd.DataFrame) -> list[str]:
     return features.select_dtypes(include=["object", "string"]).columns.tolist()
 
@@ -166,13 +283,11 @@ def train_predict(
     train_features = preprocess(train_df)
     test_features = preprocess(test_df)
     categories = categorical_columns(train_features)
-    regressor = make_regressor()
+    regressor = RevenueRegressor()
     classifier = make_classifier()
-    regressor.fit(
-        train_features, np.log1p(train_df["revenue"]), cat_features=categories
-    )
+    regressor.fit(train_df, np.log1p(train_df["revenue"]).to_numpy())
     classifier.fit(train_features, train_df["rating"], cat_features=categories)
-    revenue = revenue_from_log(regressor.predict(test_features))
+    revenue = revenue_from_log(regressor.predict(test_df))
     rating = classifier.predict(test_features).reshape(-1)
     return revenue, rating
 

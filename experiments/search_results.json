@@ -1,0 +1,502 @@
+{
+  "primary_split_seed": 42,
+  "validation_rows": 3201,
+  "source": "training CSV only",
+  "native_and_blend_trials": [
+    {
+      "name": "baseline",
+      "RMSLE": 1.886050624097713,
+      "seconds": 41.1353386589999,
+      "budget_unknown": 2.344674670302196,
+      "budget_known": 1.4979969759403189,
+      "revenue_le_1000": 5.7920821801923115,
+      "revenue_gt_1000": 1.5715538699931622
+    },
+    {
+      "name": "cat-rich-900-d6",
+      "RMSLE": 1.8896328702196272,
+      "seconds": 58.7744659519999,
+      "budget_unknown": 2.362944408753384,
+      "budget_known": 1.4860906046645699,
+      "revenue_le_1000": 5.7903699440399246,
+      "revenue_gt_1000": 1.5762348978484502
+    },
+    {
+      "name": "cat-rich-1200-d7",
+      "RMSLE": 1.8833643493075378,
+      "seconds": 20.448122944999795,
+      "budget_unknown": 2.347908556419141,
+      "budget_known": 1.4888739743179176,
+      "revenue_le_1000": 5.792309674096261,
+      "revenue_gt_1000": 1.568181493076493
+    },
+    {
+      "name": "lgb-rich-31",
+      "RMSLE": 1.9247749594581,
+      "seconds": 2.970385589000216,
+      "budget_unknown": 2.392888527736587,
+      "budget_known": 1.528676400888422,
+      "revenue_le_1000": 5.7234809231933506,
+      "revenue_gt_1000": 1.6282956695859725,
+      "iterations": 330
+    },
+    {
+      "name": "lgb-rich-63",
+      "RMSLE": 1.9092150182494123,
+      "seconds": 3.901975424000284,
+      "budget_unknown": 2.370499107315675,
+      "budget_known": 1.5195391904948532,
+      "revenue_le_1000": 5.703599724590546,
+      "revenue_gt_1000": 1.6117581348587122,
+      "iterations": 276
+    },
+    {
+      "name": "ensemble-baseline-cat-rich-900-d6-0.25",
+      "RMSLE": 1.8827693886570842,
+      "seconds": null,
+      "budget_unknown": 2.353899521910521,
+      "budget_known": 1.4811901731242703,
+      "revenue_le_1000": 5.778941593456452,
+      "revenue_gt_1000": 1.5692290422316337,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-baseline-cat-rich-900-d6-0.5",
+      "RMSLE": 1.8798765194789318,
+      "seconds": null,
+      "budget_unknown": 2.3478260919051874,
+      "budget_known": 1.4815528855330964,
+      "revenue_le_1000": 5.775413278721944,
+      "revenue_gt_1000": 1.5661029394950505,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-baseline-cat-rich-900-d6-0.75",
+      "RMSLE": 1.8809725827578199,
+      "seconds": null,
+      "budget_unknown": 2.3447472091036796,
+      "budget_known": 1.4871748909549682,
+      "revenue_le_1000": 5.779799467733391,
+      "revenue_gt_1000": 1.5668798114503855,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-cat-rich-900-d6-cat-rich-1200-d7-0.25",
+      "RMSLE": 1.8822982096736973,
+      "seconds": null,
+      "budget_unknown": 2.349251535727633,
+      "budget_known": 1.4851749067893132,
+      "revenue_le_1000": 5.789166633533956,
+      "revenue_gt_1000": 1.567275574527253,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-cat-rich-900-d6-cat-rich-1200-d7-0.5",
+      "RMSLE": 1.882989687023144,
+      "seconds": null,
+      "budget_unknown": 2.352209767285838,
+      "budget_known": 1.4834747599876097,
+      "revenue_le_1000": 5.787795096775289,
+      "revenue_gt_1000": 1.568319625139718,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-cat-rich-900-d6-cat-rich-1200-d7-0.75",
+      "RMSLE": 1.885436847557281,
+      "seconds": null,
+      "budget_unknown": 2.356777168697749,
+      "budget_known": 1.4837804051449741,
+      "revenue_le_1000": 5.788196323115583,
+      "revenue_gt_1000": 1.5713097579705853,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-cat-rich-900-d6-lgb-rich-31-0.25",
+      "RMSLE": 1.8926909028467735,
+      "seconds": null,
+      "budget_unknown": 2.3603214805705526,
+      "budget_known": 1.495407814604788,
+      "revenue_le_1000": 5.723465220527981,
+      "revenue_gt_1000": 1.5888463361423752,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-cat-rich-900-d6-lgb-rich-31-0.5",
+      "RMSLE": 1.8759294265463524,
+      "seconds": null,
+      "budget_unknown": 2.344308700288171,
+      "budget_known": 1.4769262521207864,
+      "revenue_le_1000": 5.734662377436495,
+      "revenue_gt_1000": 1.5666278822895596,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-cat-rich-900-d6-lgb-rich-31-0.75",
+      "RMSLE": 1.8749015236933655,
+      "seconds": null,
+      "budget_unknown": 2.34518930536226,
+      "budget_known": 1.473788114112959,
+      "revenue_le_1000": 5.75700696855013,
+      "revenue_gt_1000": 1.5623755991036508,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-cat-rich-1200-d7-lgb-rich-63-0.25",
+      "RMSLE": 1.8786984764715555,
+      "seconds": null,
+      "budget_unknown": 2.3385045368250728,
+      "budget_known": 1.4890062140442253,
+      "revenue_le_1000": 5.709772310412101,
+      "revenue_gt_1000": 1.5733482570780981,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-cat-rich-1200-d7-lgb-rich-63-0.5",
+      "RMSLE": 1.8640376891078698,
+      "seconds": null,
+      "budget_unknown": 2.3239228431671513,
+      "budget_known": 1.4734802170796477,
+      "revenue_le_1000": 5.726687532939832,
+      "revenue_gt_1000": 1.5529165165253533,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    },
+    {
+      "name": "ensemble-cat-rich-1200-d7-lgb-rich-63-0.75",
+      "RMSLE": 1.8656064988800007,
+      "seconds": null,
+      "budget_unknown": 2.3270813811537296,
+      "budget_known": 1.4734356740075412,
+      "revenue_le_1000": 5.754250655636112,
+      "revenue_gt_1000": 1.551173489014972,
+      "timing_note": "Blend of cached holdout predictions; constituent model fitting is not timed in this row."
+    }
+  ],
+  "sparse_trials": [
+    {
+      "name": "ridge-10",
+      "RMSLE": 2.0485597823878643,
+      "seconds": 0.4337153970000145
+    },
+    {
+      "name": "ridge-100",
+      "RMSLE": 1.980688122029751,
+      "seconds": 0.17856239499997173
+    },
+    {
+      "name": "lgb-sparse-15",
+      "RMSLE": 1.9434157809241972,
+      "seconds": 9.771571931999915,
+      "iterations": 527
+    },
+    {
+      "name": "lgb-sparse-31",
+      "RMSLE": 1.9303073987628971,
+      "seconds": 15.78175055499969,
+      "iterations": 363
+    },
+    {
+      "name": "xgb-sparse-d5",
+      "RMSLE": 1.943021863818326,
+      "seconds": 137.02195818799964
+    }
+  ],
+  "hurdle_trials": [
+    {
+      "name": "budget-separate-cat",
+      "RMSLE": 1.8973821250058043,
+      "seconds": 21.37605247500005,
+      "small_revenue_RMSLE": 5.714548732058581
+    },
+    {
+      "name": "hurdle-1000",
+      "RMSLE": 1.8964624791956148,
+      "seconds": 15.491571045,
+      "AUROC": 0.9367947324608056,
+      "average_precision": 0.5672471455325684,
+      "small_revenue_RMSLE": 5.824382680844016
+    },
+    {
+      "name": "hurdle-10000",
+      "RMSLE": 1.8728469615110428,
+      "seconds": 15.107112226000027,
+      "AUROC": 0.91146444616803,
+      "average_precision": 0.6190380791958568,
+      "small_revenue_RMSLE": 5.763209885453519
+    }
+  ],
+  "gate_adjustments": [
+    {
+      "threshold": 1000,
+      "power": 0.5,
+      "alpha": 0.25,
+      "RMSLE": 1.8752470251077102
+    },
+    {
+      "threshold": 1000,
+      "power": 0.5,
+      "alpha": 0.5,
+      "RMSLE": 1.9213940099324485
+    },
+    {
+      "threshold": 1000,
+      "power": 0.5,
+      "alpha": 1,
+      "RMSLE": 2.1076119012444043
+    },
+    {
+      "threshold": 1000,
+      "power": 0.75,
+      "alpha": 0.25,
+      "RMSLE": 1.864405187390385
+    },
+    {
+      "threshold": 1000,
+      "power": 0.75,
+      "alpha": 0.5,
+      "RMSLE": 1.8731667596668362
+    },
+    {
+      "threshold": 1000,
+      "power": 0.75,
+      "alpha": 1,
+      "RMSLE": 1.9153010609883074
+    },
+    {
+      "threshold": 1000,
+      "power": 1,
+      "alpha": 0.25,
+      "RMSLE": 1.8632853923540853
+    },
+    {
+      "threshold": 1000,
+      "power": 1,
+      "alpha": 0.5,
+      "RMSLE": 1.8656669205164702
+    },
+    {
+      "threshold": 1000,
+      "power": 1,
+      "alpha": 1,
+      "RMSLE": 1.879768135228209
+    },
+    {
+      "threshold": 1000,
+      "power": 1.5,
+      "alpha": 0.25,
+      "RMSLE": 1.86385786885995
+    },
+    {
+      "threshold": 1000,
+      "power": 1.5,
+      "alpha": 0.5,
+      "RMSLE": 1.8647835535856487
+    },
+    {
+      "threshold": 1000,
+      "power": 1.5,
+      "alpha": 1,
+      "RMSLE": 1.8699429101166989
+    },
+    {
+      "threshold": 10000,
+      "power": 0.5,
+      "alpha": 0.25,
+      "RMSLE": 1.8776499240685327
+    },
+    {
+      "threshold": 10000,
+      "power": 0.5,
+      "alpha": 0.5,
+      "RMSLE": 1.939514773172964
+    },
+    {
+      "threshold": 10000,
+      "power": 0.5,
+      "alpha": 1,
+      "RMSLE": 2.1885294040849312
+    },
+    {
+      "threshold": 10000,
+      "power": 0.75,
+      "alpha": 0.25,
+      "RMSLE": 1.8633169940614949
+    },
+    {
+      "threshold": 10000,
+      "power": 0.75,
+      "alpha": 0.5,
+      "RMSLE": 1.8781134545988445
+    },
+    {
+      "threshold": 10000,
+      "power": 0.75,
+      "alpha": 1,
+      "RMSLE": 1.9524775661830627
+    },
+    {
+      "threshold": 10000,
+      "power": 1,
+      "alpha": 0.25,
+      "RMSLE": 1.8607532790296148
+    },
+    {
+      "threshold": 10000,
+      "power": 1,
+      "alpha": 0.5,
+      "RMSLE": 1.8645116604780416
+    },
+    {
+      "threshold": 10000,
+      "power": 1,
+      "alpha": 1,
+      "RMSLE": 1.8929104015350606
+    },
+    {
+      "threshold": 10000,
+      "power": 1.5,
+      "alpha": 0.25,
+      "RMSLE": 1.8605910269527972
+    },
+    {
+      "threshold": 10000,
+      "power": 1.5,
+      "alpha": 0.5,
+      "RMSLE": 1.8599744348554328
+    },
+    {
+      "threshold": 10000,
+      "power": 1.5,
+      "alpha": 1,
+      "RMSLE": 1.8672298070993916
+    }
+  ],
+  "additional_blends": [
+    {
+      "name": "ridge-10",
+      "weight": 0.1,
+      "RMSLE": 1.8580900489903986
+    },
+    {
+      "name": "ridge-10",
+      "weight": 0.25,
+      "RMSLE": 1.8597305251282361
+    },
+    {
+      "name": "ridge-10",
+      "weight": 0.5,
+      "RMSLE": 1.8903909944560475
+    },
+    {
+      "name": "ridge-100",
+      "weight": 0.1,
+      "RMSLE": 1.8630279899513336
+    },
+    {
+      "name": "ridge-100",
+      "weight": 0.25,
+      "RMSLE": 1.8669449676377439
+    },
+    {
+      "name": "ridge-100",
+      "weight": 0.5,
+      "RMSLE": 1.8878154930593318
+    },
+    {
+      "name": "lgb-sparse-15",
+      "weight": 0.1,
+      "RMSLE": 1.864246263576819
+    },
+    {
+      "name": "lgb-sparse-15",
+      "weight": 0.25,
+      "RMSLE": 1.86784619490111
+    },
+    {
+      "name": "lgb-sparse-15",
+      "weight": 0.5,
+      "RMSLE": 1.882540421910148
+    },
+    {
+      "name": "lgb-sparse-31",
+      "weight": 0.1,
+      "RMSLE": 1.862984856293738
+    },
+    {
+      "name": "lgb-sparse-31",
+      "weight": 0.25,
+      "RMSLE": 1.8646551258377773
+    },
+    {
+      "name": "lgb-sparse-31",
+      "weight": 0.5,
+      "RMSLE": 1.8760635668414747
+    },
+    {
+      "name": "xgb-sparse-d5",
+      "weight": 0.1,
+      "RMSLE": 1.8646889037579117
+    },
+    {
+      "name": "xgb-sparse-d5",
+      "weight": 0.25,
+      "RMSLE": 1.86874940033736
+    },
+    {
+      "name": "xgb-sparse-d5",
+      "weight": 0.5,
+      "RMSLE": 1.8836674783571437
+    },
+    {
+      "name": "budget-separate-cat",
+      "weight": 0.1,
+      "RMSLE": 1.8612888661489646
+    },
+    {
+      "name": "budget-separate-cat",
+      "weight": 0.25,
+      "RMSLE": 1.8597119559401538
+    },
+    {
+      "name": "budget-separate-cat",
+      "weight": 0.5,
+      "RMSLE": 1.8638838430180198
+    },
+    {
+      "name": "hurdle-1000",
+      "weight": 0.1,
+      "RMSLE": 1.863322963802077
+    },
+    {
+      "name": "hurdle-1000",
+      "weight": 0.25,
+      "RMSLE": 1.8639117427403649
+    },
+    {
+      "name": "hurdle-1000",
+      "weight": 0.5,
+      "RMSLE": 1.8693134342834867
+    },
+    {
+      "name": "hurdle-10000",
+      "weight": 0.1,
+      "RMSLE": 1.860471222361697
+    },
+    {
+      "name": "hurdle-10000",
+      "weight": 0.25,
+      "RMSLE": 1.8569691763938903
+    },
+    {
+      "name": "hurdle-10000",
+      "weight": 0.5,
+      "RMSLE": 1.856085594228409
+    }
+  ],
+  "notes": [
+    "The depth-4/400-tree sparse XGBoost trial was interrupted after approximately 121 seconds; no completed score is claimed.",
+    "The initial rich depth-7 run with default CTR complexity was interrupted; the completed CTR=1 run is reported.",
+    "The rich depth-6/900 completed run uses CTR complexity 4; the selected rich depth-7/1200 run uses CTR complexity 1.",
+    "Many comparisons on one split create selection optimism; the adopted fixed configuration was checked once with split seed 2026.",
+    "Bootstrap intervals are conditional on fitted models and do not incorporate the whole search."
+  ]
+}
