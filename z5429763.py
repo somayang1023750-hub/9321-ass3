@@ -7,6 +7,7 @@ Only the training file is used for fitting; test targets are never read as featu
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import re
 from pathlib import Path
 from time import perf_counter
@@ -185,16 +186,91 @@ def regression_preprocess(df: pd.DataFrame) -> pd.DataFrame:
     return f
 
 
-class RevenueRegressor:
-    """Average complementary CatBoost/LightGBM predictions in log-revenue space.
+class EntityFrequencyFeatures:
+    """Fit-only, role-specific counts of distinct entities per film.
 
-    Category vocabularies are learned only in fit. No validation/test labels or
-    target-derived input features are used. Parameters are fixed before the
-    second training-only split and before generating revised CSV files.
+    During fitting, leave-one-out counts exclude the current film. Prediction
+    uses the complete fitted dictionary and never learns from the input batch.
     """
 
+    columns = (
+        "cast",
+        "production_companies",
+        "director",
+        "writers",
+        "producers",
+        "keywords",
+    )
+
+    @staticmethod
+    def _tokens(df, name):
+        separator = "|" if name == "keywords" else ","
+        return text_column(df, name).map(
+            lambda value: list(
+                dict.fromkeys(
+                    token.strip().casefold()
+                    for token in value.split(separator)
+                    if token.strip()
+                )
+            )
+        )
+
+    def fit(self, df):
+        self.counts_ = {}
+        for name in self.columns:
+            self.counts_[name] = Counter(
+                token for tokens in self._tokens(df, name) for token in tokens
+            )
+        return self
+
+    def transform(self, df, leave_one_out=False):
+        features = pd.DataFrame(index=df.index)
+        subtract = int(leave_one_out)
+        for name in self.columns:
+            counts = self.counts_[name]
+            values = self._tokens(df, name).map(
+                lambda tokens: np.array(
+                    [max(0, counts.get(token, 0) - subtract) for token in tokens],
+                    dtype=float,
+                )
+            )
+            features[name + "_all_freq_max"] = values.map(
+                lambda values: np.log1p(values.max()) if len(values) else 0.0
+            ).to_numpy()
+            features[name + "_all_freq_mean"] = values.map(
+                lambda values: np.log1p(values).mean() if len(values) else 0.0
+            ).to_numpy()
+            features[name + "_all_freq_known"] = values.map(
+                lambda values: np.mean(values > 0) if len(values) else 0.0
+            ).to_numpy()
+        return features
+
+
+def add_revenue_crosses(features):
+    """Expose three low-cardinality conditional categories, without targets."""
+    features = features.copy()
+    state = features.budget_missing.astype(str)
+    features["country_budget_state"] = (
+        features.production_countries_first + " | " + state
+    )
+    features["genre_budget_state"] = features.genres_first + " | " + state
+    decade = features.release_decade.fillna(-1).astype(int).astype(str)
+    features["language_decade"] = features.original_language + " | " + decade
+    return features
+
+
+class ReferenceRevenueRegressor:
+    """Previous log-space ensemble, retained for reproducible comparisons.
+
+    Category vocabularies are learned only in fit. No validation/test labels or
+    target-derived input features are used.
+    """
+
+    def _features(self, df, fitting=False):
+        return regression_preprocess(df)
+
     def fit(self, df: pd.DataFrame, log_revenue: np.ndarray):
-        features = regression_preprocess(df)
+        features = self._features(df, fitting=True)
         self.cat_model = CatBoostRegressor(
             **REVENUE_CAT_PARAMS,
             loss_function="RMSE",
@@ -227,7 +303,7 @@ class RevenueRegressor:
         return self
 
     def predict(self, df: pd.DataFrame) -> np.ndarray:
-        features = regression_preprocess(df)
+        features = self._features(df)
         cat_prediction = self.cat_model.predict(features)
         light_features = features.copy()
         light_features.columns = self.feature_names
@@ -239,6 +315,19 @@ class RevenueRegressor:
                 .astype(dtype)
             )
         return 0.5 * cat_prediction + 0.5 * self.lgb_model.predict(light_features)
+
+
+class RevenueRegressor(ReferenceRevenueRegressor):
+    """Conditional categorical crosses plus fit-only leave-one-out entity counts."""
+
+    def _features(self, df, fitting=False):
+        features = add_revenue_crosses(regression_preprocess(df))
+        if fitting:
+            self.entity_frequency_ = EntityFrequencyFeatures().fit(df)
+        frequency = self.entity_frequency_.transform(df, leave_one_out=fitting)
+        for name in frequency:
+            features[name] = frequency[name].to_numpy()
+        return features
 
 
 def categorical_columns(features: pd.DataFrame) -> list[str]:

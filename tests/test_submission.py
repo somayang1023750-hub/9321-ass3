@@ -200,3 +200,33 @@ def test_proposal_features_ignore_targets_and_handle_missing_ratios(movies):
     assert features.loc[1, "budget_per_runtime"] == -99
     assert features.loc[2, "budget_per_runtime_missing"] == 1
     assert not np.isinf(features.select_dtypes(include="number").to_numpy()).any()
+
+
+def test_revenue_predictions_are_independent_of_batch_order_and_index(
+    movies, monkeypatch
+):
+    monkeypatch.setattr(
+        solution,
+        "REVENUE_CAT_PARAMS",
+        dict(iterations=20, depth=3, learning_rate=0.1, max_ctr_complexity=1),
+    )
+    monkeypatch.setattr(
+        solution,
+        "REVENUE_LGB_PARAMS",
+        dict(n_estimators=20, num_leaves=7, learning_rate=0.1, min_child_samples=5),
+    )
+    model = solution.RevenueRegressor().fit(movies, np.log1p(movies.revenue).to_numpy())
+    query = movies.iloc[:4].drop(columns=["revenue", "rating"]).copy()
+    query["cast"] = ["new actor", "known a", None, "new actor, known b"]
+    query.index = [500, -2, 97, 11]
+    expected = model.predict(query)
+    np.testing.assert_allclose(
+        model.predict(query.iloc[[2, 0, 3, 1]]), expected[[2, 0, 3, 1]], rtol=1e-12
+    )
+    larger = pd.concat([query] + [query.iloc[[0]]] * 10, ignore_index=True)
+    np.testing.assert_allclose(model.predict(larger)[:4], expected, rtol=1e-12)
+    for position in range(4):
+        np.testing.assert_allclose(
+            model.predict(query.iloc[[position]]), expected[[position]], rtol=1e-12
+        )
+    np.testing.assert_allclose(model.predict(query), expected, rtol=1e-12)

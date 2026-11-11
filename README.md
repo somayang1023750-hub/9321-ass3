@@ -25,7 +25,7 @@ python3 z5429763.py <train_file> <test_file>
 - `z5429763_regression.csv`：`imdb_id,revenue`
 - `z5429763_classification.csv`：`imdb_id,rating`
 
-脚本独立训练收入回归的 CatBoost＋LightGBM 对数融合模型，以及评级分类的 CatBoost 模型，使用 4 个 CPU 线程，无 GPU 或外部下载。目标列不参与特征生成，测试文件可以完全没有 `revenue`、`rating` 两列。输出文件会被本次运行覆盖。
+脚本独立训练收入回归的 CatBoost＋LightGBM 对数融合模型，以及评级分类的 CatBoost 模型。回归新增三个条件类别交叉和六类完整实体的拟合内留一频次聚合；分类特征和参数保持不变。每个模型使用 4 个 CPU 线程，无 GPU 或外部下载。目标列不参与特征生成，测试文件可以完全没有 `revenue`、`rating` 两列。输出文件会被本次运行覆盖。
 
 ## 重现 Notebook
 
@@ -66,14 +66,22 @@ python -m pytest tests/test_submission.py -q
 
 ## 回归改进与复核
 
-训练内两次固定划分均改善，但尚未达到 RMSLE ≤1.7。实验结果、未达标原因和证据见 [REGRESSION_EXPERIMENTS.md](REGRESSION_EXPERIMENTS.md)。只读取训练文件的复核命令如下：
+当前回归方案在三个固定训练内划分中均优于前版融合模型，但尚未达到 RMSLE ≤1.7：
+
+| 划分种子 | 前版融合模型 | 条件交叉＋留一实体频次 |
+| --- | ---: | ---: |
+| 42 | 1.864038 | **1.840865** |
+| 2026 | 1.760112 | **1.738034** |
+| 2027（方案固定后的额外检查） | 1.921720 | **1.916176** |
+
+详细方法与局限见 [NEW_REGRESSION_EXPERIMENTS.md](NEW_REGRESSION_EXPERIMENTS.md)，最终正式命令验收见 [VALIDATION.md](VALIDATION.md)。前两划分已参与多轮开发，第三次增益较小，不能据此保证隐藏测试成绩。只读取训练文件的复核命令如下：
 
 ```bash
 python experiments/regression_validation.py <train_file> --output /tmp/regression-results.json
 ```
 
-该开发工具比较基线与最终回归模型，运行两次固定划分和 Bootstrap；其运行时间不属于正式提交脚本的两分钟计时。Notebook 中包含同样的复核代码和实际输出。
+该开发工具比较 `ReferenceRevenueRegressor` 与最终 `RevenueRegressor`，默认运行种子42、2026、2027三个固定划分及 Bootstrap；其运行时间不属于正式提交脚本的两分钟计时。Notebook 中包含同样的复核代码与输出。当前CLI耗时以 `VALIDATION.md` 为准，CSE仍需本人实测。
 
-稳健性和预算缺失补充诊断见 [ROBUSTNESS_DIAGNOSTICS.md](ROBUSTNESS_DIAGNOSTICS.md)。可运行 `python experiments/robustness_validation.py <train_file> --output /tmp/robustness.json` 复核。正式模型暂不采用整体分数更差的降权或插补方案。
+父模型的稳健性和预算缺失历史诊断见 [ROBUSTNESS_DIAGNOSTICS.md](ROBUSTNESS_DIAGNOSTICS.md)。可运行 `python experiments/robustness_validation.py <train_file> --output /tmp/robustness.json` 复核。那些拒绝结论对应新增交叉与留一特征之前的父模型，并非对新模型重新做过的降权/插补实验。
 
-上传修改意见的逐项评估见 [PROPOSAL_REVIEW.md](PROPOSAL_REVIEW.md)。本轮未发现两个既有划分均改善的配置，正式模型与预测CSV保留。可用 `experiments/proposal_validation.py` 重现消融；完整实验是开发流程，不属于正式脚本的两分钟计时。
+上传修改意见的历史评估见 [PROPOSAL_REVIEW.md](PROPOSAL_REVIEW.md)：该轮建议组合没有在两个既有划分同时改善，因此当时未替换父模型。后续独立设计的条件交叉＋完整实体留一频次才得到上表中的改善。可用 `experiments/proposal_validation.py` 重现旧消融；完整开发实验不属于正式脚本的两分钟计时。

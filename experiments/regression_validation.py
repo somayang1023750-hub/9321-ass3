@@ -23,15 +23,11 @@ def compare(train, seed):
         np.arange(len(train)), test_size=0.2, random_state=seed, stratify=train.rating
     )
     target = np.log1p(train.revenue.to_numpy())
-    features = solution.preprocess(train)
     started = perf_counter()
-    baseline = solution.make_regressor()
-    baseline.fit(
-        features.iloc[fitting],
-        target[fitting],
-        cat_features=solution.categorical_columns(features),
+    baseline = solution.ReferenceRevenueRegressor().fit(
+        train.iloc[fitting], target[fitting]
     )
-    baseline_prediction = np.maximum(0, baseline.predict(features.iloc[validation]))
+    baseline_prediction = np.maximum(0, baseline.predict(train.iloc[validation]))
     baseline_seconds = perf_counter() - started
     started = perf_counter()
     candidate = solution.RevenueRegressor().fit(train.iloc[fitting], target[fitting])
@@ -103,7 +99,7 @@ def main():
     args = parser.parse_args()
     train = pd.read_csv(args.train_file)
     results = []
-    for seed in [42, 2026]:
+    for seed in [42, 2026, 2027]:
         result = compare(train, seed)
         results.append(result)
         print(json.dumps(result, ensure_ascii=False), flush=True)

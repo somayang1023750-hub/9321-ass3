@@ -1,0 +1,411 @@
+{
+  "reference_commit": "4e3e1e3",
+  "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+  "selected": "cross_entity_frequency_loo",
+  "selection_splits": [
+    42,
+    2026
+  ],
+  "additional_check_seed": 2027,
+  "decision": "Feature recipe and model parameters fixed before the 2027 check; use the pure candidate, not a blend picked after the check.",
+  "rows": [
+    {
+      "seed": 42,
+      "name": "reference",
+      "RMSLE": 1.8640376891078698,
+      "seconds": null,
+      "unknown_budget": 2.3239228431671513,
+      "tiny_revenue": 5.726687532939832,
+      "other": 1.5529165165253533
+    },
+    {
+      "seed": 42,
+      "name": "crosses",
+      "RMSLE": 1.8538458874401538,
+      "seconds": 23.539058895999915,
+      "unknown_budget": 2.3084916899192254,
+      "tiny_revenue": 5.6904617996407305,
+      "other": 1.545082485124105
+    },
+    {
+      "seed": 42,
+      "name": "crosses_blend_0.25",
+      "RMSLE": 1.8586980086414686,
+      "seconds": null,
+      "unknown_budget": 2.3168745547999254,
+      "tiny_revenue": 5.715781903077545,
+      "other": 1.547732292844469,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "crosses_blend_0.5",
+      "RMSLE": 1.855213435778439,
+      "seconds": null,
+      "unknown_budget": 2.311945189693398,
+      "tiny_revenue": 5.706105024471231,
+      "other": 1.5446915963202466,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "quality",
+      "RMSLE": 1.8637794170692457,
+      "seconds": 32.13963749600225,
+      "unknown_budget": 2.3241589902412425,
+      "tiny_revenue": 5.7010653379609,
+      "other": 1.5560104138835482
+    },
+    {
+      "seed": 42,
+      "name": "quality_blend_0.25",
+      "RMSLE": 1.862990199599166,
+      "seconds": null,
+      "unknown_budget": 2.3230692498620855,
+      "tiny_revenue": 5.719558694416629,
+      "other": 1.5525664896270184,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "quality_blend_0.5",
+      "RMSLE": 1.8625978303911752,
+      "seconds": null,
+      "unknown_budget": 2.3228240278511287,
+      "tiny_revenue": 5.712910947420305,
+      "other": 1.5529660290298497,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "quality_crosses",
+      "RMSLE": 1.854533731555037,
+      "seconds": 26.774802240997815,
+      "unknown_budget": 2.3121970156282328,
+      "tiny_revenue": 5.693992987487111,
+      "other": 1.5454661355036818
+    },
+    {
+      "seed": 42,
+      "name": "quality_crosses_blend_0.25",
+      "RMSLE": 1.8588051471038878,
+      "seconds": null,
+      "unknown_budget": 2.3176482491128327,
+      "tiny_revenue": 5.716780645408853,
+      "other": 1.5477318830814033,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "quality_crosses_blend_0.5",
+      "RMSLE": 1.855471119034681,
+      "seconds": null,
+      "unknown_budget": 2.3135956917398817,
+      "tiny_revenue": 5.708025832450552,
+      "other": 1.5447550134433736,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "all_entity_frequency",
+      "RMSLE": 1.879928954510691,
+      "seconds": 28.426049436999165,
+      "unknown_budget": 2.3462878745323517,
+      "tiny_revenue": 5.433824075803625,
+      "other": 1.609879420571353
+    },
+    {
+      "seed": 42,
+      "name": "all_entity_frequency_blend_0.25",
+      "RMSLE": 1.8570790584442196,
+      "seconds": null,
+      "unknown_budget": 2.313541057276749,
+      "tiny_revenue": 5.6505713157944015,
+      "other": 1.5543860252130566,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "all_entity_frequency_blend_0.5",
+      "RMSLE": 1.8574249374362521,
+      "seconds": null,
+      "unknown_budget": 2.313834927734942,
+      "tiny_revenue": 5.576337557722891,
+      "other": 1.5645015153880273,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "linear_residual",
+      "RMSLE": 1.8795416582757687,
+      "seconds": 29.639887191002344,
+      "unknown_budget": 2.324239534681721,
+      "tiny_revenue": 5.653173244216192,
+      "other": 1.5817796931528059
+    },
+    {
+      "seed": 42,
+      "name": "budget_residual",
+      "RMSLE": 1.8814200012969269,
+      "seconds": 24.974296798998694,
+      "unknown_budget": 2.3551358524303803,
+      "tiny_revenue": 5.670301703094538,
+      "other": 1.5818707911075864
+    },
+    {
+      "seed": 42,
+      "name": "distribution",
+      "RMSLE": 2.039387977616701,
+      "seconds": 32.27918804000001,
+      "unknown_budget": 2.501880845562805,
+      "tiny_revenue": 6.478417307650162,
+      "other": 1.6697818916860647
+    },
+    {
+      "seed": 42,
+      "name": "distribution_blend_0.25",
+      "RMSLE": 1.8727957500724028,
+      "seconds": null,
+      "unknown_budget": 2.3359541078126664,
+      "tiny_revenue": 5.870689721746214,
+      "other": 1.5443159239800477,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "distribution_blend_0.5",
+      "RMSLE": 1.9058727299200644,
+      "seconds": null,
+      "unknown_budget": 2.3703378230703294,
+      "tiny_revenue": 6.0457288364653055,
+      "other": 1.5616666219340676,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "all_entity_frequency_loo",
+      "RMSLE": 1.8514336742258553,
+      "seconds": 28.687485317997925,
+      "unknown_budget": 2.3062290978925146,
+      "tiny_revenue": 5.650929571691202,
+      "other": 1.5473441907714394
+    },
+    {
+      "seed": 42,
+      "name": "all_entity_frequency_loo_blend_0.25",
+      "RMSLE": 1.8557613264183073,
+      "seconds": null,
+      "unknown_budget": 2.312671344745963,
+      "tiny_revenue": 5.704982378927252,
+      "other": 1.545523710103558,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "all_entity_frequency_loo_blend_0.5",
+      "RMSLE": 1.850887081728304,
+      "seconds": null,
+      "unknown_budget": 2.305949930775335,
+      "tiny_revenue": 5.685108416957882,
+      "other": 1.542118306678649,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "cross_entity_frequency_loo",
+      "RMSLE": 1.8408654048915003,
+      "seconds": 29.79165492500033,
+      "unknown_budget": 2.277372433586565,
+      "tiny_revenue": 5.6102595203678645,
+      "other": 1.5396245604822514
+    },
+    {
+      "seed": 42,
+      "name": "cross_entity_frequency_loo_blend_0.25",
+      "RMSLE": 1.8522480538167196,
+      "seconds": null,
+      "unknown_budget": 2.304747828401798,
+      "tiny_revenue": 5.694189595283041,
+      "other": 1.5425967368820772,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 42,
+      "name": "cross_entity_frequency_loo_blend_0.5",
+      "RMSLE": 1.844426683399891,
+      "seconds": null,
+      "unknown_budget": 2.2905411834491627,
+      "tiny_revenue": 5.663928594805463,
+      "other": 1.536914235650031,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 2026,
+      "name": "reference",
+      "RMSLE": 1.7601118292137785,
+      "seconds": null,
+      "unknown_budget": 2.1222077565728186,
+      "tiny_revenue": 5.093769393456178,
+      "other": 1.57312415688886
+    },
+    {
+      "seed": 2026,
+      "name": "crosses",
+      "RMSLE": 1.7520583497152227,
+      "seconds": 23.712767562999943,
+      "unknown_budget": 2.1090554082246693,
+      "tiny_revenue": 5.048942012098404,
+      "other": 1.5678219348983076
+    },
+    {
+      "seed": 2026,
+      "name": "crosses_blend_0.25",
+      "RMSLE": 1.7549152037612725,
+      "seconds": null,
+      "unknown_budget": 2.1147717530264973,
+      "tiny_revenue": 5.080351444139735,
+      "other": 1.5683363835584307,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 2026,
+      "name": "crosses_blend_0.5",
+      "RMSLE": 1.7518345853196187,
+      "seconds": null,
+      "unknown_budget": 2.110090597106293,
+      "tiny_revenue": 5.068400831100166,
+      "other": 1.5658511464233285,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 2026,
+      "name": "quality_crosses",
+      "RMSLE": 1.7497886368161746,
+      "seconds": 26.520688256998255,
+      "unknown_budget": 2.102387048832292,
+      "tiny_revenue": 5.072331658813022,
+      "other": 1.5631515860113547
+    },
+    {
+      "seed": 2026,
+      "name": "quality_crosses_blend_0.25",
+      "RMSLE": 1.75447215378108,
+      "seconds": null,
+      "unknown_budget": 2.1132323383339346,
+      "tiny_revenue": 5.08642564613966,
+      "other": 1.5672897546945805,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 2026,
+      "name": "quality_crosses_blend_0.5",
+      "RMSLE": 1.7508645305801531,
+      "seconds": null,
+      "unknown_budget": 2.10692276963216,
+      "tiny_revenue": 5.080401811299349,
+      "other": 1.5636741691314051,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 2026,
+      "name": "all_entity_frequency_loo",
+      "RMSLE": 1.749634146161652,
+      "seconds": 29.583579954000015,
+      "unknown_budget": 2.105216750603412,
+      "tiny_revenue": 5.074990660577371,
+      "other": 1.5627384560074522
+    },
+    {
+      "seed": 2026,
+      "name": "all_entity_frequency_loo_blend_0.25",
+      "RMSLE": 1.7522106912341355,
+      "seconds": null,
+      "unknown_budget": 2.1108247631943073,
+      "tiny_revenue": 5.085494906584815,
+      "other": 1.5647711894165417,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 2026,
+      "name": "all_entity_frequency_loo_blend_0.5",
+      "RMSLE": 1.747816597129194,
+      "seconds": null,
+      "unknown_budget": 2.1041740156239497,
+      "tiny_revenue": 5.079601983472975,
+      "other": 1.560238424341355,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 2026,
+      "name": "cross_entity_frequency_loo",
+      "RMSLE": 1.7380337423483734,
+      "seconds": 35.820075359999464,
+      "unknown_budget": 2.0912014343217322,
+      "tiny_revenue": 5.0155470960452195,
+      "other": 1.5546548298997762
+    },
+    {
+      "seed": 2026,
+      "name": "cross_entity_frequency_loo_blend_0.25",
+      "RMSLE": 1.7483130557609612,
+      "seconds": null,
+      "unknown_budget": 2.1059090926252435,
+      "tiny_revenue": 5.068980874796672,
+      "other": 1.5617513585506515,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 2026,
+      "name": "cross_entity_frequency_loo_blend_0.5",
+      "RMSLE": 1.74066886871496,
+      "seconds": null,
+      "unknown_budget": 2.0952585760851083,
+      "tiny_revenue": 5.047652748950914,
+      "other": 1.5548489341758835,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 2027,
+      "name": "reference",
+      "RMSLE": 1.9217200171274027,
+      "seconds": null,
+      "unknown_budget": 2.3539593174870928,
+      "tiny_revenue": 6.387331035612084,
+      "other": 1.552354206617799
+    },
+    {
+      "seed": 2027,
+      "name": "cross_entity_frequency_loo",
+      "RMSLE": 1.9161762469051289,
+      "seconds": 33.31327933200009,
+      "unknown_budget": 2.3345724230482277,
+      "tiny_revenue": 6.278228149263839,
+      "other": 1.5606344667404413
+    },
+    {
+      "seed": 2027,
+      "name": "cross_entity_frequency_loo_blend_0.25",
+      "RMSLE": 1.9144926172735341,
+      "seconds": null,
+      "unknown_budget": 2.341857511127735,
+      "tiny_revenue": 6.356639816436183,
+      "other": 1.5474641515474254,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    },
+    {
+      "seed": 2027,
+      "name": "cross_entity_frequency_loo_blend_0.5",
+      "RMSLE": 1.911149906438439,
+      "seconds": null,
+      "unknown_budget": 2.3345673336726116,
+      "tiny_revenue": 6.328205557474982,
+      "other": 1.547219634966835,
+      "timing_note": "Blended cached predictions; constituent fitting cost is not measured by this row."
+    }
+  ],
+  "limitations": [
+    "Repeated development splits are not independent unseen datasets.",
+    "Conditional bootstrap intervals do not account for the entire model search.",
+    "No test targets used; no validation rows omitted."
+  ]
+}

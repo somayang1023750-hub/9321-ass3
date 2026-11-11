@@ -3,138 +3,138 @@
     "seed": 42,
     "fitting_rows": 12803,
     "validation_rows": 3201,
-    "baseline_RMSLE": 1.886050624097713,
-    "candidate_RMSLE": 1.8640376891078698,
-    "baseline_seconds": 13.013910210000176,
-    "candidate_seconds": 21.175194247000036,
+    "baseline_RMSLE": 1.8640376891078698,
+    "candidate_RMSLE": 1.8408654048915003,
+    "baseline_seconds": 24.774763240999164,
+    "candidate_seconds": 31.689702342999226,
     "candidate_RMSLE_95_CI": [
-      1.7640177165260738,
-      1.9638735298691912
+      1.7412898800519956,
+      1.9344794084639347
     ],
     "improvement_95_CI": [
-      0.004954853996519271,
-      0.03966446377945193
+      0.008772518170552334,
+      0.03824926407963337
     ],
     "subgroups": {
       "budget_unknown": {
         "rows": 1292,
-        "RMSLE": 2.3239228431671513,
-        "squared_log_error_share": 0.6273513993201575
+        "RMSLE": 2.277372433586565,
+        "squared_log_error_share": 0.6177331188928677
       },
       "budget_known": {
         "rows": 1909,
-        "RMSLE": 1.4734802170796477,
-        "squared_log_error_share": 0.37264860067984257
+        "RMSLE": 1.473822714723324,
+        "squared_log_error_share": 0.38226688110713225
       },
       "revenue_le_1000": {
         "rows": 112,
-        "RMSLE": 5.726687532939832,
-        "squared_log_error_share": 0.3302402045996797
+        "RMSLE": 5.6102595203678645,
+        "squared_log_error_share": 0.3249781626656038
       },
       "revenue_gt_1000": {
         "rows": 3089,
-        "RMSLE": 1.5529165165253533,
-        "squared_log_error_share": 0.6697597954003204
+        "RMSLE": 1.5396245604822514,
+        "squared_log_error_share": 0.6750218373343962
       }
     },
     "cat_feature_importance": [
       {
         "feature": "budget_small",
-        "importance": 6.802311948566204
+        "importance": 6.447910471916229
+      },
+      {
+        "feature": "language_decade",
+        "importance": 5.076452752613338
       },
       {
         "feature": "log1p_budget",
-        "importance": 5.6554847907323165
-      },
-      {
-        "feature": "original_language",
-        "importance": 4.8837858977754625
+        "importance": 4.968199405846536
       },
       {
         "feature": "budget",
-        "importance": 4.846525433558299
+        "importance": 4.822960327726691
       },
       {
         "feature": "log1p_imdb_votes",
-        "importance": 4.555174738649543
+        "importance": 4.183235636581619
       },
       {
-        "feature": "production_companies_first",
-        "importance": 4.283752017996246
-      },
-      {
-        "feature": "runtime",
-        "importance": 4.237301784028341
-      },
-      {
-        "feature": "release_year",
-        "importance": 4.2188325856323985
-      },
-      {
-        "feature": "budget_per_runtime",
-        "importance": 4.030824779481731
+        "feature": "production_companies_all_freq_mean",
+        "importance": 4.081133941491314
       },
       {
         "feature": "vote_count",
-        "importance": 3.8347458259631937
+        "importance": 3.8997184984905013
       },
       {
         "feature": "imdb_votes",
-        "importance": 3.7037828731902755
+        "importance": 3.83608211976988
       },
       {
-        "feature": "genres_first",
-        "importance": 3.2220337932778165
+        "feature": "runtime",
+        "importance": 3.497201089250093
+      },
+      {
+        "feature": "log1p_vote_count",
+        "importance": 2.5072230608845816
+      },
+      {
+        "feature": "release_year",
+        "importance": 2.412218006019198
+      },
+      {
+        "feature": "original_language",
+        "importance": 2.369161419174235
       }
     ],
     "lightgbm_feature_gain": [
       {
         "feature": "budget",
-        "gain": 1039883.4881658554
+        "gain": 917039.7082967758
       },
       {
         "feature": "vote_count",
-        "gain": 275130.7481880188
-      },
-      {
-        "feature": "imdb_votes",
-        "gain": 146377.89158439636
+        "gain": 231322.8585205078
       },
       {
         "feature": "log1p_budget",
-        "gain": 108846.3101568222
+        "gain": 209461.77541542053
       },
       {
-        "feature": "production_countries_all",
-        "gain": 73515.5476436615
+        "feature": "language_decade",
+        "gain": 160706.36376857758
       },
       {
-        "feature": "release_year",
-        "gain": 71949.00789546967
+        "feature": "imdb_votes",
+        "gain": 155499.5023908615
       },
       {
-        "feature": "budget_per_runtime",
-        "gain": 64025.068402290344
+        "feature": "country_budget_state",
+        "gain": 53169.534821510315
+      },
+      {
+        "feature": "writers_all_freq_mean",
+        "gain": 47474.46077442169
       },
       {
         "feature": "genres_all",
-        "gain": 58530.78483390808
-      },
-      {
-        "feature": "runtime",
-        "gain": 53837.631940841675
+        "gain": 46175.455439567566
       },
       {
         "feature": "popularity",
-        "gain": 47594.13436317444
+        "gain": 45093.287932395935
       },
       {
-        "feature": "production_countries_first",
-        "gain": 46739.52809524536
+        "feature": "runtime",
+        "gain": 43502.93046474457
       },
       {
-        "feature": "original_language",
-        "gain": 41620.9080953598
+        "feature": "production_companies_all_freq_mean",
+        "gain": 39933.61719036102
+      },
+      {
+        "feature": "genre_budget_state",
+        "gain": 39334.33132648468
       }
     ]
   },
@@ -142,138 +142,277 @@
     "seed": 2026,
     "fitting_rows": 12803,
     "validation_rows": 3201,
-    "baseline_RMSLE": 1.7843526314914249,
-    "candidate_RMSLE": 1.7601118292137785,
-    "baseline_seconds": 13.841000933000032,
-    "candidate_seconds": 26.373100640000303,
+    "baseline_RMSLE": 1.7601118292137785,
+    "candidate_RMSLE": 1.7380337423483734,
+    "baseline_seconds": 23.358880315001443,
+    "candidate_seconds": 30.661593136999727,
     "candidate_RMSLE_95_CI": [
-      1.6754859923765335,
-      1.8438910880059154
+      1.6518496222638588,
+      1.8189690657298851
     ],
     "improvement_95_CI": [
-      0.006024938043337147,
-      0.04157970202609106
+      0.00819916631127921,
+      0.03711034875881619
     ],
     "subgroups": {
       "budget_unknown": {
         "rows": 1284,
-        "RMSLE": 2.1222077565728186,
-        "squared_log_error_share": 0.583142401749125
+        "RMSLE": 2.0912014343217322,
+        "squared_log_error_share": 0.5807038141543533
       },
       "budget_known": {
         "rows": 1917,
-        "RMSLE": 1.4684727888123401,
-        "squared_log_error_share": 0.41685759825087493
+        "RMSLE": 1.4542880656578578,
+        "squared_log_error_share": 0.41929618584564665
       },
       "revenue_le_1000": {
         "rows": 85,
-        "RMSLE": 5.093769393456178,
-        "squared_log_error_share": 0.22239820991388157
+        "RMSLE": 5.0155470960452195,
+        "squared_log_error_share": 0.22113295524053017
       },
       "revenue_gt_1000": {
         "rows": 3116,
-        "RMSLE": 1.57312415688886,
-        "squared_log_error_share": 0.7776017900861184
+        "RMSLE": 1.5546548298997762,
+        "squared_log_error_share": 0.7788670447594699
       }
     },
     "cat_feature_importance": [
       {
         "feature": "budget_small",
-        "importance": 7.087290433748486
-      },
-      {
-        "feature": "log1p_budget",
-        "importance": 5.711452654798084
-      },
-      {
-        "feature": "log1p_imdb_votes",
-        "importance": 5.135906063756943
-      },
-      {
-        "feature": "original_language",
-        "importance": 4.948064790332653
-      },
-      {
-        "feature": "imdb_votes",
-        "importance": 4.912379323799676
+        "importance": 7.1012620887188636
       },
       {
         "feature": "budget",
-        "importance": 4.774560749633716
+        "importance": 6.049844974639978
       },
       {
-        "feature": "release_year",
-        "importance": 4.556593329375006
+        "feature": "language_decade",
+        "importance": 5.883358602386653
+      },
+      {
+        "feature": "log1p_imdb_votes",
+        "importance": 3.9998065700283174
+      },
+      {
+        "feature": "log1p_budget",
+        "importance": 3.6742496818269017
+      },
+      {
+        "feature": "imdb_votes",
+        "importance": 3.421930226915577
       },
       {
         "feature": "runtime",
-        "importance": 4.257853104305195
-      },
-      {
-        "feature": "production_companies_first",
-        "importance": 4.1624612566442485
+        "importance": 3.390172144258898
       },
       {
         "feature": "log1p_vote_count",
-        "importance": 3.146910814341137
+        "importance": 3.3071435032285934
+      },
+      {
+        "feature": "production_companies_all_freq_mean",
+        "importance": 2.784634033831058
+      },
+      {
+        "feature": "release_year",
+        "importance": 2.2984684890961233
       },
       {
         "feature": "vote_count",
-        "importance": 3.0999779890146444
+        "importance": 2.1660947464890516
       },
       {
-        "feature": "budget_per_runtime",
-        "importance": 3.035048765161768
+        "feature": "writers_all_freq_mean",
+        "importance": 2.1322931999500807
       }
     ],
     "lightgbm_feature_gain": [
       {
         "feature": "budget",
-        "gain": 1054281.7777643204
-      },
-      {
-        "feature": "vote_count",
-        "gain": 264960.12543296814
-      },
-      {
-        "feature": "imdb_votes",
-        "gain": 149027.56897354126
+        "gain": 918337.7988023758
       },
       {
         "feature": "log1p_budget",
-        "gain": 117035.79272651672
+        "gain": 203055.8345861435
       },
       {
-        "feature": "release_year",
-        "gain": 73064.28363800049
+        "feature": "imdb_votes",
+        "gain": 189905.3400669098
       },
       {
-        "feature": "production_countries_all",
-        "gain": 66753.78677177429
+        "feature": "vote_count",
+        "gain": 185942.35585021973
       },
       {
-        "feature": "genres_all",
-        "gain": 61182.49184513092
+        "feature": "language_decade",
+        "gain": 160772.26531791687
       },
       {
         "feature": "popularity",
-        "gain": 60558.7755613327
+        "gain": 55718.782420158386
       },
       {
-        "feature": "original_language",
-        "gain": 57450.141860961914
+        "feature": "writers_all_freq_mean",
+        "gain": 49186.361726760864
+      },
+      {
+        "feature": "country_budget_state",
+        "gain": 47292.09949398041
+      },
+      {
+        "feature": "production_companies_all_freq_mean",
+        "gain": 46596.75445175171
+      },
+      {
+        "feature": "genres_all",
+        "gain": 45698.888387680054
       },
       {
         "feature": "runtime",
-        "gain": 48574.17147541046
+        "gain": 41895.97154521942
       },
       {
-        "feature": "production_countries_first",
-        "gain": 39819.260796546936
+        "feature": "genre_budget_state",
+        "gain": 39336.36931228638
+      }
+    ]
+  },
+  {
+    "seed": 2027,
+    "fitting_rows": 12803,
+    "validation_rows": 3201,
+    "baseline_RMSLE": 1.9217200171274027,
+    "candidate_RMSLE": 1.9161762469051289,
+    "baseline_seconds": 27.22858115100098,
+    "candidate_seconds": 30.869262527998217,
+    "candidate_RMSLE_95_CI": [
+      1.8103258310930295,
+      2.023813596949988
+    ],
+    "improvement_95_CI": [
+      -0.007857391413599524,
+      0.020234130132198224
+    ],
+    "subgroups": {
+      "budget_unknown": {
+        "rows": 1305,
+        "RMSLE": 2.3345724230482277,
+        "squared_log_error_share": 0.6051577997766341
+      },
+      "budget_known": {
+        "rows": 1896,
+        "RMSLE": 1.5644832023176483,
+        "squared_log_error_share": 0.3948422002233658
+      },
+      "revenue_le_1000": {
+        "rows": 107,
+        "RMSLE": 6.278228149263839,
+        "squared_log_error_share": 0.35884044496517026
+      },
+      "revenue_gt_1000": {
+        "rows": 3094,
+        "RMSLE": 1.5606344667404413,
+        "squared_log_error_share": 0.6411595550348298
+      }
+    },
+    "cat_feature_importance": [
+      {
+        "feature": "budget_small",
+        "importance": 7.56222452152903
       },
       {
-        "feature": "imdb_votes_per_vote_count",
-        "gain": 30992.229826927185
+        "feature": "budget",
+        "importance": 5.172289830206293
+      },
+      {
+        "feature": "language_decade",
+        "importance": 4.9659475092337955
+      },
+      {
+        "feature": "log1p_budget",
+        "importance": 4.362094717848601
+      },
+      {
+        "feature": "vote_count",
+        "importance": 4.193397885617273
+      },
+      {
+        "feature": "imdb_votes",
+        "importance": 3.614478588990153
+      },
+      {
+        "feature": "runtime",
+        "importance": 3.498562982435047
+      },
+      {
+        "feature": "production_companies_all_freq_mean",
+        "importance": 3.305209137432964
+      },
+      {
+        "feature": "log1p_vote_count",
+        "importance": 2.9038248408331224
+      },
+      {
+        "feature": "log1p_imdb_votes",
+        "importance": 2.6059322496045634
+      },
+      {
+        "feature": "release_year",
+        "importance": 2.345045658223453
+      },
+      {
+        "feature": "vote_count_small",
+        "importance": 2.171898264532085
+      }
+    ],
+    "lightgbm_feature_gain": [
+      {
+        "feature": "budget",
+        "gain": 937755.5736522675
+      },
+      {
+        "feature": "vote_count",
+        "gain": 215581.82332515717
+      },
+      {
+        "feature": "log1p_budget",
+        "gain": 205245.0313167572
+      },
+      {
+        "feature": "language_decade",
+        "gain": 142782.99089717865
+      },
+      {
+        "feature": "imdb_votes",
+        "gain": 138279.52126789093
+      },
+      {
+        "feature": "popularity",
+        "gain": 63090.13903617859
+      },
+      {
+        "feature": "production_companies_all_freq_mean",
+        "gain": 58609.60776424408
+      },
+      {
+        "feature": "country_budget_state",
+        "gain": 50292.846323013306
+      },
+      {
+        "feature": "genres_all",
+        "gain": 45174.9070148468
+      },
+      {
+        "feature": "runtime",
+        "gain": 38117.68923377991
+      },
+      {
+        "feature": "genre_budget_state",
+        "gain": 36946.28825855255
+      },
+      {
+        "feature": "writers_all_freq_mean",
+        "gain": 29208.01360988617
       }
     ]
   }
