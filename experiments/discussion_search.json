@@ -1,0 +1,209 @@
+{
+  "baseline_commit": "451354e7728307efb0acd195b4e0886adb362109",
+  "selection_seed": 42,
+  "confirmation_seeds": [
+    2026,
+    2718
+  ],
+  "trials": {
+    "reg-42-screen.json": [
+      {
+        "name": "base_reg",
+        "seed": 42,
+        "metric": "RMSLE",
+        "score": 1.8408654048915003,
+        "params": {},
+        "seconds": 31.94551351600012
+      },
+      {
+        "name": "reg_te20_light",
+        "seed": 42,
+        "metric": "RMSLE",
+        "score": 1.8382390723466282,
+        "params": {
+          "smoothing": 20,
+          "folds": 5,
+          "component": "light"
+        },
+        "seconds": 18.660945244999766
+      },
+      {
+        "name": "reg_te20_cat",
+        "seed": 42,
+        "metric": "RMSLE",
+        "score": 1.832650417474012,
+        "params": {
+          "smoothing": 20,
+          "folds": 5,
+          "component": "cat"
+        },
+        "seconds": 30.853174158
+      },
+      {
+        "name": "reg_te20_both",
+        "seed": 42,
+        "metric": "RMSLE",
+        "score": 1.839149259803426,
+        "params": {
+          "smoothing": 20,
+          "folds": 5,
+          "component": "both"
+        },
+        "seconds": 30.874439719999828
+      },
+      {
+        "name": "reg_te100_light",
+        "seed": 42,
+        "metric": "RMSLE",
+        "score": 1.8397420458583233,
+        "params": {
+          "smoothing": 100,
+          "folds": 5,
+          "component": "light"
+        },
+        "seconds": 17.675989068000035
+      },
+      {
+        "name": "reg_te100_cat",
+        "seed": 42,
+        "metric": "RMSLE",
+        "score": 1.8298367742067891,
+        "params": {
+          "smoothing": 100,
+          "folds": 5,
+          "component": "cat"
+        },
+        "seconds": 30.507244486000218
+      },
+      {
+        "name": "reg_te100_both",
+        "seed": 42,
+        "metric": "RMSLE",
+        "score": 1.834076404158987,
+        "params": {
+          "smoothing": 100,
+          "folds": 5,
+          "component": "both"
+        },
+        "seconds": 30.526226513999973
+      }
+    ],
+    "cls-42-screen.json": [
+      {
+        "name": "base_cls",
+        "seed": 42,
+        "metric": "MacroF1",
+        "score": 0.752605884645472,
+        "params": {
+          "features": "base",
+          "weights": "SqrtBalanced"
+        },
+        "seconds": 44.720195775999855
+      },
+      {
+        "name": "cls_unweighted",
+        "seed": 42,
+        "metric": "MacroF1",
+        "score": 0.7299359377168783,
+        "params": {
+          "features": "base",
+          "weights": null
+        },
+        "seconds": 46.34943337599998
+      },
+      {
+        "name": "cls_balanced",
+        "seed": 42,
+        "metric": "MacroF1",
+        "score": 0.6848602133491948,
+        "params": {
+          "features": "base",
+          "weights": "Balanced"
+        },
+        "seconds": 44.60969233800006
+      },
+      {
+        "name": "cls_enriched",
+        "seed": 42,
+        "metric": "MacroF1",
+        "score": 0.7693295768477767,
+        "params": {
+          "features": "enrich",
+          "weights": "SqrtBalanced"
+        },
+        "seconds": 128.90504389499984
+      }
+    ],
+    "cls-42-bounded.json": [
+      {
+        "name": "cls_fast_enriched",
+        "seed": 42,
+        "metric": "MacroF1",
+        "score": 0.7750051746991563,
+        "params": {
+          "features": "enrich",
+          "weights": "SqrtBalanced",
+          "model_params": {
+            "iterations": 650,
+            "depth": 6,
+            "learning_rate": 0.06,
+            "l2_leaf_reg": 5,
+            "auto_class_weights": "SqrtBalanced",
+            "max_ctr_complexity": 1
+          }
+        },
+        "seconds": 53.504241151000315
+      },
+      {
+        "name": "cls_fast_te20",
+        "seed": 42,
+        "metric": "MacroF1",
+        "score": 0.7690841399857318,
+        "params": {
+          "features": "te",
+          "weights": "SqrtBalanced",
+          "model_params": {
+            "iterations": 650,
+            "depth": 6,
+            "learning_rate": 0.06,
+            "l2_leaf_reg": 5,
+            "auto_class_weights": "SqrtBalanced",
+            "max_ctr_complexity": 1
+          }
+        },
+        "seconds": 65.91580288800014
+      },
+      {
+        "name": "cls_light",
+        "seed": 42,
+        "metric": "MacroF1",
+        "score": 0.7252693633646015,
+        "params": {
+          "features": "light",
+          "weights": "sqrt",
+          "model_params": {
+            "n_estimators": 500,
+            "num_leaves": 31,
+            "learning_rate": 0.035,
+            "min_child_samples": 25,
+            "reg_lambda": 15,
+            "colsample_bytree": 0.9,
+            "class_weight": {
+              "Medium": 0.6319867631183617,
+              "Low": 1.6750610431077402,
+              "High": 2.6736717037953928
+            }
+          }
+        },
+        "seconds": 7.09141362299988
+      }
+    ]
+  },
+  "unscored": [
+    {
+      "name": "cls_te20_unbounded",
+      "status": "interrupted_unscored",
+      "reason": "Enriched default-CTR classifier scored well but took128.9s on2threads; bounded CTR1 candidates tested instead to respect final runtime budget."
+    }
+  ]
+}

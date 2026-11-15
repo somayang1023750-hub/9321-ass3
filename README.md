@@ -1,6 +1,6 @@
 # COMP9321 Assignment 3 — z5429763
 
-电影收入回归与评级分类。需求详见 [REQUIREMENTS.md](REQUIREMENTS.md)，实际验证结果见 [VALIDATION.md](VALIDATION.md)。
+电影收入回归与评级分类。需求详见 [REQUIREMENTS.md](REQUIREMENTS.md)，实际验证结果见 [VALIDATION.md](VALIDATION.md)，最新模型说明见 [DISCUSSION_IMPROVEMENTS.md](DISCUSSION_IMPROVEMENTS.md)。
 
 ## 环境
 
@@ -25,7 +25,7 @@ python3 z5429763.py <train_file> <test_file>
 - `z5429763_regression.csv`：`imdb_id,revenue`
 - `z5429763_classification.csv`：`imdb_id,rating`
 
-脚本独立训练收入回归的 CatBoost＋LightGBM 对数融合模型，以及评级分类的 CatBoost 模型。回归新增三个条件类别交叉和六类完整实体的拟合内留一频次聚合；分类特征和参数保持不变。每个模型使用 4 个 CPU 线程，无 GPU 或外部下载。目标列不参与特征生成，测试文件可以完全没有 `revenue`、`rating` 两列。输出文件会被本次运行覆盖。
+脚本独立训练收入回归的 CatBoost＋LightGBM 对数融合模型，以及评级分类的 CatBoost 模型。回归在类别交叉与留一实体频次基础上，仅为 CatBoost 增加五折交叉拟合的 log 收入实体均值；LightGBM 保持原样。分类使用扩展的目标无关元数据特征，限制类别组合复杂度为1。每个模型使用 4 个 CPU 线程，无 GPU 或外部下载。回归训练标签仅通过严格折外编码和模型拟合使用；预测不读取目标列。分类不使用收入或收入编码。测试文件可以完全没有 `revenue`、`rating` 两列。输出文件会被本次运行覆盖。
 
 ## 重现 Notebook
 
@@ -55,7 +55,7 @@ export XDG_CACHE_HOME=/workspace/.cache
 ## 测试
 
 ```bash
-python -m pytest tests/test_submission.py -q
+python -m pytest tests -q
 ```
 
 测试使用临时合成数据验证目标隔离、未知类别、缺失值、训练目标对预测的影响、任意输入路径、当前目录输出、列/行/ID/标签契约。完整提供数据上的 CLI 验证及性能见 `VALIDATION.md`。
@@ -66,7 +66,7 @@ python -m pytest tests/test_submission.py -q
 
 ## 回归改进与复核
 
-当前回归方案在三个固定训练内划分中均优于前版融合模型，但尚未达到 RMSLE ≤1.7：
+下表记录交叉＋留一频次阶段的历史结果。最新讨论后更新同时改进了两项任务，见 [DISCUSSION_IMPROVEMENTS.md](DISCUSSION_IMPROVEMENTS.md)；回归仍未达到 RMSLE ≤1.7：
 
 | 划分种子 | 前版融合模型 | 条件交叉＋留一实体频次 |
 | --- | ---: | ---: |
@@ -85,3 +85,11 @@ python experiments/regression_validation.py <train_file> --output /tmp/regressio
 父模型的稳健性和预算缺失历史诊断见 [ROBUSTNESS_DIAGNOSTICS.md](ROBUSTNESS_DIAGNOSTICS.md)。可运行 `python experiments/robustness_validation.py <train_file> --output /tmp/robustness.json` 复核。那些拒绝结论对应新增交叉与留一特征之前的父模型，并非对新模型重新做过的降权/插补实验。
 
 上传修改意见的历史评估见 [PROPOSAL_REVIEW.md](PROPOSAL_REVIEW.md)：该轮建议组合没有在两个既有划分同时改善，因此当时未替换父模型。后续独立设计的条件交叉＋完整实体留一频次才得到上表中的改善。可用 `experiments/proposal_validation.py` 重现旧消融；完整开发实验不属于正式脚本的两分钟计时。
+
+## 讨论澄清后的当前模型复核
+
+```bash
+python experiments/discussion_validation.py <train_file> --output /tmp/discussion-results.json
+```
+
+仅读取传入的训练文件，重新拟合旧/新生产模型并复核42、2026、2718三个划分，不读取提供测试集。此开发实验及Notebook的多模型耗时不属于正式CLI的两分钟计时。

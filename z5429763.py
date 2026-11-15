@@ -16,6 +16,7 @@ import numpy as np
 import pandas as pd
 from catboost import CatBoostClassifier, CatBoostRegressor
 from lightgbm import LGBMRegressor
+from sklearn.model_selection import KFold
 
 SEED = 42
 THREADS = 4
@@ -259,6 +260,120 @@ def add_revenue_crosses(features):
     return features
 
 
+class CrossFittedEntityEncoder:
+    """Smoothed entity means, with whole held-out folds excluded during fit.
+
+    Targets are supplied explicitly by the caller, never read from input
+    columns. Prediction uses frozen training maps and training-only priors.
+    """
+
+    columns = EntityFrequencyFeatures.columns + (
+        "production_countries", "original_language", "genres"
+    )
+
+    def __init__(self, smoothing=100, folds=5):
+        self.smoothing = smoothing
+        self.folds = folds
+
+    @staticmethod
+    def _flatten(tokens):
+        counts = np.array([len(row) for row in tokens], dtype=int)
+        words = np.array([word for row in tokens for word in row], dtype=object)
+        films = np.repeat(np.arange(len(tokens)), counts)
+        return words, films, counts
+
+    @classmethod
+    def _tokens(cls, df):
+        return {
+            name: EntityFrequencyFeatures._tokens(df, name).tolist()
+            for name in cls.columns
+        }
+
+    @staticmethod
+    def _target(df, target):
+        target = np.asarray(target, dtype=float)
+        if target.ndim == 1:
+            target = target[:, None]
+        if (
+            target.ndim != 2 or len(target) != len(df) or not len(df)
+            or not np.isfinite(target).all()
+        ):
+            raise ValueError("Expected one finite target vector per fitting row")
+        return target
+
+    def _fit_tokens(self, tokens, target):
+        self.prior_ = target.mean(axis=0)
+        self.maps_ = {}
+        for name, rows in tokens.items():
+            words, films, _ = self._flatten(rows)
+            codes, keys = pd.factorize(words, sort=False)
+            counts = np.bincount(codes, minlength=len(keys))
+            sums = np.column_stack([
+                np.bincount(codes, weights=target[films, j], minlength=len(keys))
+                for j in range(target.shape[1])
+            ])
+            means = (sums + self.smoothing * self.prior_) / (
+                counts[:, None] + self.smoothing
+            )
+            self.maps_[name] = (pd.Index(keys), means)
+        return self
+
+    def _transform_tokens(self, tokens, index):
+        features = {}
+        width = len(self.prior_)
+        for name, rows in tokens.items():
+            words, films, counts = self._flatten(rows)
+            keys, means = self.maps_[name]
+            ids = keys.get_indexer(words)
+            values = np.broadcast_to(self.prior_, (len(words), width)).copy()
+            known = ids >= 0
+            values[known] = means[ids[known]]
+            average = np.column_stack([
+                np.bincount(films, weights=values[:, j], minlength=len(index))
+                for j in range(width)
+            ]) / np.maximum(counts[:, None], 1)
+            maximum = np.full((len(index), width), -np.inf)
+            np.maximum.at(maximum, films, values)
+            average[counts == 0] = self.prior_
+            maximum[counts == 0] = self.prior_
+            for j, values in enumerate(np.column_stack([average, maximum]).T):
+                features[f"{name}_target_mean_{j}"] = values
+        return pd.DataFrame(features, index=index)
+
+    def fit(self, df, target):
+        target = self._target(df, target)
+        return self._fit_tokens(self._tokens(df), target)
+
+    def transform(self, df):
+        return self._transform_tokens(self._tokens(df), df.index)
+
+    def fit_transform(self, df, target):
+        target = self._target(df, target)
+        if len(df) < 2:
+            raise ValueError("Cross-fitting requires at least two fitting rows")
+        tokens = self._tokens(df)
+        result = None
+        splitter = KFold(
+            n_splits=min(self.folds, len(df)), shuffle=True, random_state=SEED
+        )
+        for fitting, held in splitter.split(df):
+            encoder = CrossFittedEntityEncoder(self.smoothing, self.folds)
+            encoder._fit_tokens(
+                {name: [rows[i] for i in fitting] for name, rows in tokens.items()},
+                target[fitting],
+            )
+            encoded = encoder._transform_tokens(
+                {name: [rows[i] for i in held] for name, rows in tokens.items()},
+                df.index[held],
+            )
+            if result is None:
+                result = np.empty((len(df), encoded.shape[1]))
+                names = encoded.columns
+            result[held] = encoded.to_numpy()
+        self._fit_tokens(tokens, target)
+        return pd.DataFrame(result, index=df.index, columns=names)
+
+
 class ReferenceRevenueRegressor:
     """Previous log-space ensemble, retained for reproducible comparisons.
 
@@ -269,8 +384,12 @@ class ReferenceRevenueRegressor:
     def _features(self, df, fitting=False):
         return regression_preprocess(df)
 
+    def _cat_features(self, df, features, target=None, fitting=False):
+        return features
+
     def fit(self, df: pd.DataFrame, log_revenue: np.ndarray):
         features = self._features(df, fitting=True)
+        cat_features = self._cat_features(df, features, log_revenue, fitting=True)
         self.cat_model = CatBoostRegressor(
             **REVENUE_CAT_PARAMS,
             loss_function="RMSE",
@@ -280,7 +399,7 @@ class ReferenceRevenueRegressor:
             allow_writing_files=False,
         )
         self.cat_model.fit(
-            features, log_revenue, cat_features=categorical_columns(features)
+            cat_features, log_revenue, cat_features=categorical_columns(cat_features)
         )
         self.lgb_model = LGBMRegressor(
             **REVENUE_LGB_PARAMS,
@@ -304,7 +423,7 @@ class ReferenceRevenueRegressor:
 
     def predict(self, df: pd.DataFrame) -> np.ndarray:
         features = self._features(df)
-        cat_prediction = self.cat_model.predict(features)
+        cat_prediction = self.cat_model.predict(self._cat_features(df, features))
         light_features = features.copy()
         light_features.columns = self.feature_names
         for name, dtype in self.category_dtypes.items():
@@ -328,6 +447,21 @@ class RevenueRegressor(ReferenceRevenueRegressor):
         for name in frequency:
             features[name] = frequency[name].to_numpy()
         return features
+
+
+class TargetEncodedRevenueRegressor(RevenueRegressor):
+    """Add cross-fitted log-revenue entity means only to CatBoost."""
+
+    def _cat_features(self, df, features, target=None, fitting=False):
+        if fitting:
+            self.entity_target_ = CrossFittedEntityEncoder(smoothing=100, folds=5)
+            encoded = self.entity_target_.fit_transform(df, target)
+        else:
+            encoded = self.entity_target_.transform(df)
+        result = features.copy()
+        for name in encoded:
+            result[name] = encoded[name].to_numpy()
+        return result
 
 
 def categorical_columns(features: pd.DataFrame) -> list[str]:
@@ -361,6 +495,20 @@ def make_classifier(**overrides) -> CatBoostClassifier:
     )
 
 
+class EnrichedRatingClassifier:
+    """Target-free credit features and bounded categorical combinations."""
+
+    def fit(self, df, rating):
+        self.feature_builder_ = RevenueRegressor()
+        features = self.feature_builder_._features(df, fitting=True)
+        self.model_ = make_classifier(max_ctr_complexity=1)
+        self.model_.fit(features, rating, cat_features=categorical_columns(features))
+        return self
+
+    def predict(self, df):
+        return self.model_.predict(self.feature_builder_._features(df)).reshape(-1)
+
+
 def revenue_from_log(predictions: np.ndarray) -> np.ndarray:
     # Float overflow protection only; no clipping based on test target values.
     return np.maximum(0.0, np.expm1(np.clip(predictions, 0.0, 50.0)))
@@ -369,15 +517,12 @@ def revenue_from_log(predictions: np.ndarray) -> np.ndarray:
 def train_predict(
     train_df: pd.DataFrame, test_df: pd.DataFrame
 ) -> tuple[np.ndarray, np.ndarray]:
-    train_features = preprocess(train_df)
-    test_features = preprocess(test_df)
-    categories = categorical_columns(train_features)
-    regressor = RevenueRegressor()
-    classifier = make_classifier()
+    regressor = TargetEncodedRevenueRegressor()
+    classifier = EnrichedRatingClassifier()
     regressor.fit(train_df, np.log1p(train_df["revenue"]).to_numpy())
-    classifier.fit(train_features, train_df["rating"], cat_features=categories)
+    classifier.fit(train_df, train_df["rating"])
     revenue = revenue_from_log(regressor.predict(test_df))
-    rating = classifier.predict(test_features).reshape(-1)
+    rating = classifier.predict(test_df)
     return revenue, rating
 
 

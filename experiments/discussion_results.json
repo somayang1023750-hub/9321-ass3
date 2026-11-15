@@ -1,0 +1,438 @@
+{
+  "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+  "source_sha256": "9f1b23a0866975c0b2c4e9b0c9b990d4b52ec29a95bf1f195b4c0cdf4f8aa5c0",
+  "results": [
+    {
+      "seed": 42,
+      "fitting_rows": 12803,
+      "validation_rows": 3201,
+      "old_RMSLE": 1.8408654048915003,
+      "new_RMSLE": 1.8308243471222028,
+      "old_MacroF1": 0.752605884645472,
+      "new_MacroF1": 0.7750051746991563,
+      "reg_improvement_95CI": [
+        0.0033751349032748123,
+        0.016463038101349116
+      ],
+      "cls_improvement_95CI": [
+        0.007804798886716308,
+        0.038422663785232694
+      ],
+      "old_reg_seconds": 20.12218631199994,
+      "new_reg_seconds": 23.823596149999958,
+      "old_cls_seconds": 24.00977321499977,
+      "new_cls_seconds": 29.81034388299986,
+      "classification_labels": [
+        "High",
+        "Low",
+        "Medium"
+      ],
+      "old_confusion_matrix": [
+        [
+          117,
+          1,
+          31
+        ],
+        [
+          6,
+          292,
+          83
+        ],
+        [
+          80,
+          199,
+          2392
+        ]
+      ],
+      "new_confusion_matrix": [
+        [
+          126,
+          1,
+          22
+        ],
+        [
+          5,
+          298,
+          78
+        ],
+        [
+          77,
+          185,
+          2409
+        ]
+      ],
+      "regression_groups": {
+        "budget_unknown": {
+          "rows": 1292,
+          "old_RMSLE": 2.277372433586565,
+          "new_RMSLE": 2.2669416314993986
+        },
+        "budget_known": {
+          "rows": 1909,
+          "old_RMSLE": 1.473822714723324,
+          "new_RMSLE": 1.463698926652818
+        },
+        "revenue_le1000": {
+          "rows": 112,
+          "old_RMSLE": 5.6102595203678645,
+          "new_RMSLE": 5.5818683789449945
+        },
+        "revenue_gt1000": {
+          "rows": 3089,
+          "old_RMSLE": 1.5396245604822514,
+          "new_RMSLE": 1.530934533974095
+        }
+      },
+      "regression_importance": [
+        {
+          "feature": "budget_small",
+          "importance": 6.946512648968179
+        },
+        {
+          "feature": "production_companies_target_mean_0",
+          "importance": 6.175389859825511
+        },
+        {
+          "feature": "language_decade",
+          "importance": 4.643247232325229
+        },
+        {
+          "feature": "budget",
+          "importance": 4.429353538899427
+        },
+        {
+          "feature": "log1p_budget",
+          "importance": 3.8994310110989607
+        },
+        {
+          "feature": "imdb_votes",
+          "importance": 3.6594313135601637
+        },
+        {
+          "feature": "runtime",
+          "importance": 3.4157876536198475
+        },
+        {
+          "feature": "vote_count",
+          "importance": 3.2164394917965793
+        },
+        {
+          "feature": "log1p_imdb_votes",
+          "importance": 2.7257665554324575
+        },
+        {
+          "feature": "release_year",
+          "importance": 2.335539026747684
+        },
+        {
+          "feature": "production_companies_target_mean_1",
+          "importance": 2.2559642989977764
+        },
+        {
+          "feature": "log1p_vote_count",
+          "importance": 2.2246235911064303
+        },
+        {
+          "feature": "popularity",
+          "importance": 1.8257977555173477
+        },
+        {
+          "feature": "budget_per_runtime",
+          "importance": 1.7425804048824152
+        },
+        {
+          "feature": "genre_budget_state",
+          "importance": 1.6566632532943173
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "fitting_rows": 12803,
+      "validation_rows": 3201,
+      "old_RMSLE": 1.7380337423483734,
+      "new_RMSLE": 1.7361930365160232,
+      "old_MacroF1": 0.7497064461975714,
+      "new_MacroF1": 0.7612328014052695,
+      "reg_improvement_95CI": [
+        -0.007810042416872892,
+        0.010841583276220873
+      ],
+      "cls_improvement_95CI": [
+        -0.0044614154320422985,
+        0.027671126289235477
+      ],
+      "old_reg_seconds": 19.294729836999977,
+      "new_reg_seconds": 25.260604994999994,
+      "old_cls_seconds": 24.55323096500024,
+      "new_cls_seconds": 28.930828824999935,
+      "classification_labels": [
+        "High",
+        "Low",
+        "Medium"
+      ],
+      "old_confusion_matrix": [
+        [
+          99,
+          3,
+          47
+        ],
+        [
+          5,
+          271,
+          105
+        ],
+        [
+          53,
+          154,
+          2464
+        ]
+      ],
+      "new_confusion_matrix": [
+        [
+          101,
+          1,
+          47
+        ],
+        [
+          5,
+          279,
+          97
+        ],
+        [
+          52,
+          147,
+          2472
+        ]
+      ],
+      "regression_groups": {
+        "budget_unknown": {
+          "rows": 1284,
+          "old_RMSLE": 2.0912014343217322,
+          "new_RMSLE": 2.087487591028708
+        },
+        "budget_known": {
+          "rows": 1917,
+          "old_RMSLE": 1.4542880656578578,
+          "new_RMSLE": 1.4541904792404425
+        },
+        "revenue_le1000": {
+          "rows": 85,
+          "old_RMSLE": 5.0155470960452195,
+          "new_RMSLE": 4.994720062689258
+        },
+        "revenue_gt1000": {
+          "rows": 3116,
+          "old_RMSLE": 1.5546548298997762,
+          "new_RMSLE": 1.5543710341430865
+        }
+      },
+      "regression_importance": [
+        {
+          "feature": "budget_small",
+          "importance": 7.523530553053101
+        },
+        {
+          "feature": "production_companies_target_mean_0",
+          "importance": 4.985226314287091
+        },
+        {
+          "feature": "budget",
+          "importance": 4.802731412089117
+        },
+        {
+          "feature": "language_decade",
+          "importance": 4.042641881227453
+        },
+        {
+          "feature": "log1p_budget",
+          "importance": 3.6437357800350396
+        },
+        {
+          "feature": "log1p_imdb_votes",
+          "importance": 3.6122063022676385
+        },
+        {
+          "feature": "log1p_vote_count",
+          "importance": 3.369167340440013
+        },
+        {
+          "feature": "runtime",
+          "importance": 3.2191963137221418
+        },
+        {
+          "feature": "imdb_votes",
+          "importance": 3.0731085084834127
+        },
+        {
+          "feature": "vote_count",
+          "importance": 2.9682268008839836
+        },
+        {
+          "feature": "production_companies_target_mean_1",
+          "importance": 2.884332586740344
+        },
+        {
+          "feature": "release_year",
+          "importance": 2.2410412122574166
+        },
+        {
+          "feature": "genre_budget_state",
+          "importance": 2.0175010274667846
+        },
+        {
+          "feature": "vote_count_small",
+          "importance": 1.9208265735652468
+        },
+        {
+          "feature": "log1p_popularity",
+          "importance": 1.9198866181601115
+        }
+      ]
+    },
+    {
+      "seed": 2718,
+      "fitting_rows": 12803,
+      "validation_rows": 3201,
+      "old_RMSLE": 1.9153207271601675,
+      "new_RMSLE": 1.9076762700367587,
+      "old_MacroF1": 0.7443065137105765,
+      "new_MacroF1": 0.7513513847275091,
+      "reg_improvement_95CI": [
+        0.0004288893156730256,
+        0.01566084516587729
+      ],
+      "cls_improvement_95CI": [
+        -0.009002840617768968,
+        0.023498963511690393
+      ],
+      "old_reg_seconds": 20.315136728999732,
+      "new_reg_seconds": 24.46430056500003,
+      "old_cls_seconds": 24.265939314000207,
+      "new_cls_seconds": 28.913787677000073,
+      "classification_labels": [
+        "High",
+        "Low",
+        "Medium"
+      ],
+      "old_confusion_matrix": [
+        [
+          108,
+          2,
+          39
+        ],
+        [
+          4,
+          284,
+          93
+        ],
+        [
+          79,
+          178,
+          2414
+        ]
+      ],
+      "new_confusion_matrix": [
+        [
+          114,
+          2,
+          33
+        ],
+        [
+          5,
+          288,
+          88
+        ],
+        [
+          78,
+          189,
+          2404
+        ]
+      ],
+      "regression_groups": {
+        "budget_unknown": {
+          "rows": 1286,
+          "old_RMSLE": 2.4059971976933605,
+          "new_RMSLE": 2.389300846450897
+        },
+        "budget_known": {
+          "rows": 1915,
+          "old_RMSLE": 1.4981788527069624,
+          "new_RMSLE": 1.4998185716161232
+        },
+        "revenue_le1000": {
+          "rows": 108,
+          "old_RMSLE": 6.457202548458509,
+          "new_RMSLE": 6.482289512880214
+        },
+        "revenue_gt1000": {
+          "rows": 3093,
+          "old_RMSLE": 1.5299160765457007,
+          "new_RMSLE": 1.5162662465785073
+        }
+      },
+      "regression_importance": [
+        {
+          "feature": "budget_small",
+          "importance": 6.8360367743978925
+        },
+        {
+          "feature": "production_companies_target_mean_0",
+          "importance": 5.29381882940849
+        },
+        {
+          "feature": "language_decade",
+          "importance": 5.059999009309965
+        },
+        {
+          "feature": "budget",
+          "importance": 4.790959155673216
+        },
+        {
+          "feature": "log1p_budget",
+          "importance": 3.6445767468422705
+        },
+        {
+          "feature": "log1p_imdb_votes",
+          "importance": 3.3977464819026295
+        },
+        {
+          "feature": "runtime",
+          "importance": 3.2611749238419976
+        },
+        {
+          "feature": "production_companies_target_mean_1",
+          "importance": 3.1457085738200283
+        },
+        {
+          "feature": "log1p_vote_count",
+          "importance": 2.9869171978718536
+        },
+        {
+          "feature": "imdb_votes",
+          "importance": 2.8810950912077105
+        },
+        {
+          "feature": "vote_count",
+          "importance": 2.0850638681883686
+        },
+        {
+          "feature": "release_year",
+          "importance": 2.0844923250266287
+        },
+        {
+          "feature": "vote_count_small",
+          "importance": 2.037137479808107
+        },
+        {
+          "feature": "producers_target_mean_0",
+          "importance": 1.9881120673953057
+        },
+        {
+          "feature": "imdb_votes_per_vote_count",
+          "importance": 1.839542287852054
+        }
+      ]
+    }
+  ]
+}
