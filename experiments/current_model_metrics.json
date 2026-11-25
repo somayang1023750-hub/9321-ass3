@@ -1,0 +1,266 @@
+{
+  "frozen": {
+    "frozen_at_utc": "2026-11-25T04:58:35.771108+00:00",
+    "model": "SoftHurdleRevenueRegressor + EnrichedRatingClassifier",
+    "source_sha256": "15ee3aa4b6ca68b7e03716c027da36381cc0877eca795d66cfb376f48efdf9eb",
+    "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+    "income_threshold": 1000,
+    "baseline_fraction": 0.5,
+    "hurdle_fraction": 0.5,
+    "gate_params": {
+      "iterations": 650,
+      "depth": 6,
+      "learning_rate": 0.05,
+      "l2_leaf_reg": 10,
+      "max_ctr_complexity": 1
+    },
+    "cat_params": {
+      "iterations": 1200,
+      "depth": 7,
+      "learning_rate": 0.04,
+      "l2_leaf_reg": 10,
+      "max_ctr_complexity": 1
+    },
+    "light_params": {
+      "n_estimators": 276,
+      "num_leaves": 63,
+      "learning_rate": 0.025,
+      "min_child_samples": 20,
+      "reg_lambda": 20,
+      "colsample_bytree": 0.9
+    },
+    "classifier_params": {
+      "iterations": 650,
+      "depth": 6,
+      "learning_rate": 0.06,
+      "l2_leaf_reg": 5,
+      "max_ctr_complexity": 1
+    },
+    "classifier_class_weights": "SqrtBalanced",
+    "seed": 42,
+    "threads": 4,
+    "python": "3.13.5",
+    "packages": {
+      "numpy": "2.4.4",
+      "pandas": "3.0.2",
+      "scikit-learn": "1.8.0",
+      "catboost": "1.2.10",
+      "lightgbm": "4.6.0"
+    }
+  },
+  "test_sha256": "642908219983de25bdd50f6c3226da6f51ffe53b0656f1cc07228a1997a9fb28",
+  "development": {
+    "seed": 42,
+    "stratify": "rating",
+    "validation_fraction": 0.2,
+    "fitting_rows": 12803,
+    "validation_rows": 3201,
+    "fit_indices_sha256": "c1d491c8ab356f6595e375caf47d0af1ed6dd9e5bb56da3a9066c43095d86495",
+    "val_indices_sha256": "1a0c1b895b5ec90191e47a0019a4be0ed5e8e68eca155cf6da4298cb71476177",
+    "fit_seconds": 92.66607892599995,
+    "metrics": {
+      "train": {
+        "rows": 12803,
+        "RMSLE": 1.4228976946248202,
+        "MacroF1": 0.884686254858586,
+        "accuracy": 0.9423572600171835,
+        "classification": {
+          "Low": {
+            "precision": 0.7541421699625869,
+            "recall": 0.9276791584483892,
+            "f1-score": 0.8319575471698113,
+            "support": 1521.0
+          },
+          "Medium": {
+            "precision": 0.9872873068648543,
+            "recall": 0.9448759943846514,
+            "f1-score": 0.9656161828702596,
+            "support": 10685.0
+          },
+          "High": {
+            "precision": 0.7903682719546742,
+            "recall": 0.9346733668341709,
+            "f1-score": 0.8564850345356869,
+            "support": 597.0
+          },
+          "accuracy": 0.9423572600171835,
+          "macro avg": {
+            "precision": 0.8439325829273718,
+            "recall": 0.9357428398890706,
+            "f1-score": 0.884686254858586,
+            "support": 12803.0
+          },
+          "weighted avg": {
+            "precision": 0.9504073242772009,
+            "recall": 0.9423572600171835,
+            "f1-score": 0.9446487470773891,
+            "support": 12803.0
+          }
+        }
+      },
+      "val": {
+        "rows": 3201,
+        "RMSLE": 1.826481529242733,
+        "MacroF1": 0.7750051746991563,
+        "accuracy": 0.8850359262730397,
+        "classification": {
+          "Low": {
+            "precision": 0.6157024793388429,
+            "recall": 0.7821522309711286,
+            "f1-score": 0.6890173410404624,
+            "support": 381.0
+          },
+          "Medium": {
+            "precision": 0.9601434834595456,
+            "recall": 0.901909397229502,
+            "f1-score": 0.9301158301158301,
+            "support": 2671.0
+          },
+          "High": {
+            "precision": 0.6057692307692307,
+            "recall": 0.8456375838926175,
+            "f1-score": 0.7058823529411765,
+            "support": 149.0
+          },
+          "accuracy": 0.8850359262730397,
+          "macro avg": {
+            "precision": 0.7272050645225397,
+            "recall": 0.8432330706977494,
+            "f1-score": 0.7750051746991563,
+            "support": 3201.0
+          },
+          "weighted avg": {
+            "precision": 0.9026508917004563,
+            "recall": 0.8850359262730397,
+            "f1-score": 0.8909813994889202,
+            "support": 3201.0
+          }
+        }
+      }
+    },
+    "baseline_val_RMSLE": 1.8308243471222028,
+    "validation_groups": {
+      "revenue_le1000": {
+        "rows": 112,
+        "baseline_RMSLE": 5.5818683789449945,
+        "current_RMSLE": 5.63771342233096
+      },
+      "revenue_gt1000": {
+        "rows": 3089,
+        "baseline_RMSLE": 1.530934533974095,
+        "current_RMSLE": 1.5180856716926905
+      },
+      "budget_unknown": {
+        "rows": 1292,
+        "baseline_RMSLE": 2.2669416314993986,
+        "current_RMSLE": 2.2632532530340663
+      },
+      "budget_known": {
+        "rows": 1909,
+        "baseline_RMSLE": 1.463698926652818,
+        "current_RMSLE": 1.4584548697273783
+      }
+    }
+  },
+  "final_refit": {
+    "fitting_rows": 16004,
+    "fit_seconds": 109.58316203599998,
+    "metrics": {
+      "full_train": {
+        "rows": 16004,
+        "RMSLE": 1.448468925628223,
+        "MacroF1": 0.8862478317733288,
+        "accuracy": 0.94407648087978,
+        "classification": {
+          "Low": {
+            "precision": 0.7617812364894077,
+            "recall": 0.9263932702418507,
+            "f1-score": 0.836061684460261,
+            "support": 1902.0
+          },
+          "Medium": {
+            "precision": 0.9873585641825985,
+            "recall": 0.9473644803833483,
+            "f1-score": 0.9669481487142256,
+            "support": 13356.0
+          },
+          "High": {
+            "precision": 0.7922374429223744,
+            "recall": 0.9302949061662198,
+            "f1-score": 0.8557336621454994,
+            "support": 746.0
+          },
+          "accuracy": 0.94407648087978,
+          "macro avg": {
+            "precision": 0.8471257478647934,
+            "recall": 0.934684218930473,
+            "f1-score": 0.8862478317733288,
+            "support": 16004.0
+          },
+          "weighted avg": {
+            "precision": 0.9514545130870864,
+            "recall": 0.94407648087978,
+            "f1-score": 0.9462088296695299,
+            "support": 16004.0
+          }
+        }
+      },
+      "test": {
+        "rows": 2287,
+        "RMSLE": 1.9305866468061956,
+        "MacroF1": 0.7458099161315627,
+        "accuracy": 0.8731963270660253,
+        "classification": {
+          "Low": {
+            "precision": 0.5659824046920822,
+            "recall": 0.7148148148148148,
+            "f1-score": 0.6317512274959084,
+            "support": 270.0
+          },
+          "Medium": {
+            "precision": 0.9463307776560789,
+            "recall": 0.9028213166144201,
+            "f1-score": 0.9240641711229947,
+            "support": 1914.0
+          },
+          "High": {
+            "precision": 0.6333333333333333,
+            "recall": 0.7378640776699029,
+            "f1-score": 0.6816143497757847,
+            "support": 103.0
+          },
+          "accuracy": 0.8731963270660253,
+          "macro avg": {
+            "precision": 0.7152155052271647,
+            "recall": 0.7851667363663792,
+            "f1-score": 0.7458099161315627,
+            "support": 2287.0
+          },
+          "weighted avg": {
+            "precision": 0.8873308662150986,
+            "recall": 0.8731963270660253,
+            "f1-score": 0.8786348635680862,
+            "support": 2287.0
+          }
+        }
+      }
+    },
+    "outputs": {
+      "regression": {
+        "file": "z5429763_regression.csv",
+        "sha256": "d297394e8f1712ab409f45480fda05bcb61b1a4433e1fc869707848935f0ff81"
+      },
+      "classification": {
+        "file": "z5429763_classification.csv",
+        "sha256": "483bb22d5bc2c3be408a5f3ee0485f8ee8a60fed1af77d5e781f1df65cc78f25"
+      }
+    }
+  },
+  "notes": [
+    "train/val share the seed-42 development fit; test uses a separate all-train refit.",
+    "Train predictions are in-sample, using frozen full-fit maps, not an OOF estimate.",
+    "Target-encoding maps used at prediction differ from cross-fitted training features.",
+    "The supplied test is scored only; no model selection uses these results.",
+    "The tutors' hidden-test metrics and current CSE runtime are unknown."
+  ]
+}

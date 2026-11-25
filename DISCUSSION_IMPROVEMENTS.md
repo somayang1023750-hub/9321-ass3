@@ -1,6 +1,6 @@
 # 课程讨论澄清后的双任务改进（2026-11-15）
 
-当前正式类是 `TargetEncodedRevenueRegressor` 和 `EnrichedRatingClassifier`。此前的 `RevenueRegressor`、`ReferenceRevenueRegressor` 和 `make_classifier()` 保留作历史对照，不等于当前 CLI 使用的全部模型。
+本文记录1377c47阶段的历史改进，当时正式类是`TargetEncodedRevenueRegressor`和`EnrichedRatingClassifier`。2026-11-25已将软分区方案接入正式CLI，最新实现、Train/Val/Test指标见[CURRENT_MODEL_METRICS.md](CURRENT_MODEL_METRICS.md)。下文的“当前”均指本文记录的历史阶段。
 
 ## 依据与边界
 

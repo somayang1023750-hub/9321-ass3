@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-25",
+  "environment": "Cloud CPU, Python3.13.5, pinned dependencies, 4 threads",
+  "source_sha256": "15ee3aa4b6ca68b7e03716c027da36381cc0877eca795d66cfb376f48efdf9eb",
+  "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+  "test_sha256": "642908219983de25bdd50f6c3226da6f51ffe53b0656f1cc07228a1997a9fb28",
+  "seconds": 118.94441702300037,
+  "exit_code": 0,
+  "stdout": "Wrote 2287 predictions per task in 117.35s\n",
+  "stderr": "mkdir -p failed for path /home/agent/.config/matplotlib: [Errno 30] Read-only file system: '/home/agent/.config/matplotlib'\nMatplotlib created a temporary cache directory at /tmp/matplotlib-hjcxigda because there was an issue with the default path (/home/agent/.config/matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.\n",
+  "outputs": {
+    "regression": {
+      "rows": 2287,
+      "columns": [
+        "imdb_id",
+        "revenue"
+      ],
+      "sha256": "d297394e8f1712ab409f45480fda05bcb61b1a4433e1fc869707848935f0ff81",
+      "exact_audit_match": true
+    },
+    "classification": {
+      "rows": 2287,
+      "columns": [
+        "imdb_id",
+        "rating"
+      ],
+      "sha256": "483bb22d5bc2c3be408a5f3ee0485f8ee8a60fed1af77d5e781f1df65cc78f25",
+      "exact_audit_match": true
+    }
+  },
+  "cse_tested": false
+}

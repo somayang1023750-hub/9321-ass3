@@ -464,6 +464,51 @@ class TargetEncodedRevenueRegressor(RevenueRegressor):
         return result
 
 
+HURDLE_GATE_PARAMS = dict(
+    iterations=650, depth=6, learning_rate=0.05, l2_leaf_reg=10,
+    max_ctr_complexity=1,
+)
+
+
+class SoftHurdleRevenueRegressor:
+    """Blend the overall regressor with probability-weighted income experts.
+
+    The revenue <= 1000 partition is defined only by fitting targets.
+    Prediction uses a feature-only gate and mixes in log1p revenue space.
+    """
+
+    def fit(self, df, log_revenue):
+        target = np.asarray(log_revenue, dtype=float)
+        self.baseline_ = TargetEncodedRevenueRegressor().fit(df, target)
+        low = target <= np.log1p(1000)
+        self.active_ = int(low.sum()) >= 2 and int((~low).sum()) >= 2
+        if not self.active_:
+            return self
+        self.feature_builder_ = RevenueRegressor()
+        features = self.feature_builder_._features(df, fitting=True)
+        self.gate_ = CatBoostClassifier(
+            **HURDLE_GATE_PARAMS, loss_function="Logloss", random_seed=SEED,
+            thread_count=THREADS, verbose=False, allow_writing_files=False,
+        ).fit(
+            features, low.astype(int), cat_features=categorical_columns(features),
+        )
+        self.low_ = TargetEncodedRevenueRegressor().fit(df.iloc[low], target[low])
+        self.high_ = TargetEncodedRevenueRegressor().fit(df.iloc[~low], target[~low])
+        return self
+
+    def predict(self, df):
+        baseline = self.baseline_.predict(df)
+        if not self.active_:
+            return np.maximum(0, baseline)
+        probability = self.gate_.predict_proba(
+            self.feature_builder_._features(df)
+        )[:, 1]
+        low = np.clip(self.low_.predict(df), 0, np.log1p(1000))
+        high = np.maximum(np.log1p(1000), self.high_.predict(df))
+        mixture = probability * low + (1 - probability) * high
+        return np.maximum(0, 0.5 * baseline + 0.5 * mixture)
+
+
 def categorical_columns(features: pd.DataFrame) -> list[str]:
     return features.select_dtypes(include=["object", "string"]).columns.tolist()
 
@@ -517,7 +562,7 @@ def revenue_from_log(predictions: np.ndarray) -> np.ndarray:
 def train_predict(
     train_df: pd.DataFrame, test_df: pd.DataFrame
 ) -> tuple[np.ndarray, np.ndarray]:
-    regressor = TargetEncodedRevenueRegressor()
+    regressor = SoftHurdleRevenueRegressor()
     classifier = EnrichedRatingClassifier()
     regressor.fit(train_df, np.log1p(train_df["revenue"]).to_numpy())
     classifier.fit(train_df, train_df["rating"])

@@ -1,6 +1,6 @@
 # COMP9321 Assignment 3 — z5429763
 
-电影收入回归与评级分类。需求详见 [REQUIREMENTS.md](REQUIREMENTS.md)，实际验证结果见 [VALIDATION.md](VALIDATION.md)，最新模型说明见 [DISCUSSION_IMPROVEMENTS.md](DISCUSSION_IMPROVEMENTS.md)。
+电影收入回归与评级分类。需求详见 [REQUIREMENTS.md](REQUIREMENTS.md)，当前train/val/test指标见 [CURRENT_MODEL_METRICS.md](CURRENT_MODEL_METRICS.md)，正式命令验证见 [VALIDATION.md](VALIDATION.md)。
 
 ## 环境
 
@@ -25,7 +25,7 @@ python3 z5429763.py <train_file> <test_file>
 - `z5429763_regression.csv`：`imdb_id,revenue`
 - `z5429763_classification.csv`：`imdb_id,rating`
 
-脚本独立训练收入回归的 CatBoost＋LightGBM 对数融合模型，以及评级分类的 CatBoost 模型。回归在类别交叉与留一实体频次基础上，仅为 CatBoost 增加五折交叉拟合的 log 收入实体均值；LightGBM 保持原样。分类使用扩展的目标无关元数据特征，限制类别组合复杂度为1。每个模型使用 4 个 CPU 线程，无 GPU 或外部下载。回归训练标签仅通过严格折外编码和模型拟合使用；预测不读取目标列。分类不使用收入或收入编码。测试文件可以完全没有 `revenue`、`rating` 两列。输出文件会被本次运行覆盖。
+脚本独立训练收入回归的软混合模型，以及评级分类的 CatBoost 模型。回归以收入≤1000和>1000训练两个区间专家，用特征预测的低收入概率在log1p空间软混合，再与整体模型各占50%；整体模型和区间专家均使用CatBoost＋LightGBM。实体目标均值严格在各自拟合分区内五折交叉生成。分类保留扩展的目标无关元数据特征，限制类别组合复杂度为1。每个模型使用4个CPU线程，无GPU或外部下载。预测不读取目标列，不按测试真实收入选择专家；分类不使用收入或收入编码。测试文件可以完全没有`revenue`、`rating`两列。输出文件会被本次运行覆盖。
 
 ## 重现 Notebook
 
@@ -86,7 +86,7 @@ python experiments/regression_validation.py <train_file> --output /tmp/regressio
 
 上传修改意见的历史评估见 [PROPOSAL_REVIEW.md](PROPOSAL_REVIEW.md)：该轮建议组合没有在两个既有划分同时改善，因此当时未替换父模型。后续独立设计的条件交叉＋完整实体留一频次才得到上表中的改善。可用 `experiments/proposal_validation.py` 重现旧消融；完整开发实验不属于正式脚本的两分钟计时。
 
-## 讨论澄清后的当前模型复核
+## 讨论澄清后的历史模型复核
 
 ```bash
 python experiments/discussion_validation.py <train_file> --output /tmp/discussion-results.json
@@ -94,6 +94,15 @@ python experiments/discussion_validation.py <train_file> --output /tmp/discussio
 
 仅读取传入的训练文件，重新拟合旧/新生产模型并复核42、2026、2718三个划分，不读取提供测试集。此开发实验及Notebook的多模型耗时不属于正式CLI的两分钟计时。
 
-## 独立保存的软分区研究候选
+## 已接入正式脚本的软分区模型
 
-已有验证中有效的是50%当前模型与50%区间软混合，不是硬路由。其源码、验证证据及保存/加载方式见[SOFT_HURDLE_SAVED.md](SOFT_HURDLE_SAVED.md)。此候选单独保存，正式CLI模型未切换；CSE测试按用户安排暂缓。
+已有验证中有效的是50%整体模型与50%区间软混合，硬路由未采用。该方案现已接入自包含的`z5429763.py`，Notebook第10节包含完整的当前指标复核代码及真实输出。历史研究候选、权重保存与验证证据见[SOFT_HURDLE_SAVED.md](SOFT_HURDLE_SAVED.md)。CSE测试按用户安排暂缓。
+
+复核当前固定模型的train、val和提供test指标（不执行调参）：
+
+```bash
+python experiments/current_model_metrics.py <train_file> <test_file> \
+  --output /tmp/current-metrics.json --prediction-dir /tmp/current-predictions
+```
+
+train和val来自同一seed42的80/20开发划分；提供test使用全量训练数据重拟合的最终模型。train是拟合样本上的误差，不代表泛化能力。提供test只在预测冻结后评分，其标签不用于选型，不能反复按test分数修改模型。

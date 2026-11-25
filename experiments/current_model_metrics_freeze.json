@@ -1,0 +1,49 @@
+{
+  "frozen_at_utc": "2026-11-25T04:58:35.771108+00:00",
+  "model": "SoftHurdleRevenueRegressor + EnrichedRatingClassifier",
+  "source_sha256": "15ee3aa4b6ca68b7e03716c027da36381cc0877eca795d66cfb376f48efdf9eb",
+  "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+  "income_threshold": 1000,
+  "baseline_fraction": 0.5,
+  "hurdle_fraction": 0.5,
+  "gate_params": {
+    "iterations": 650,
+    "depth": 6,
+    "learning_rate": 0.05,
+    "l2_leaf_reg": 10,
+    "max_ctr_complexity": 1
+  },
+  "cat_params": {
+    "iterations": 1200,
+    "depth": 7,
+    "learning_rate": 0.04,
+    "l2_leaf_reg": 10,
+    "max_ctr_complexity": 1
+  },
+  "light_params": {
+    "n_estimators": 276,
+    "num_leaves": 63,
+    "learning_rate": 0.025,
+    "min_child_samples": 20,
+    "reg_lambda": 20,
+    "colsample_bytree": 0.9
+  },
+  "classifier_params": {
+    "iterations": 650,
+    "depth": 6,
+    "learning_rate": 0.06,
+    "l2_leaf_reg": 5,
+    "max_ctr_complexity": 1
+  },
+  "classifier_class_weights": "SqrtBalanced",
+  "seed": 42,
+  "threads": 4,
+  "python": "3.13.5",
+  "packages": {
+    "numpy": "2.4.4",
+    "pandas": "3.0.2",
+    "scikit-learn": "1.8.0",
+    "catboost": "1.2.10",
+    "lightgbm": "4.6.0"
+  }
+}

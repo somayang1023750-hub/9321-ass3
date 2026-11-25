@@ -1,4 +1,4 @@
-"""Persistence and target boundaries for the saved research candidate."""
+"""Target boundaries and parity of the saved candidate and submission model."""
 import joblib
 import numpy as np
 import pandas as pd
@@ -8,8 +8,8 @@ import z5429763 as solution
 from experiments import soft_hurdle_model as candidate
 
 
-@pytest.fixture
-def fitted(monkeypatch):
+@pytest.fixture(params=["saved_candidate", "submission"])
+def fitted(monkeypatch, request):
     monkeypatch.setattr(solution, 'THREADS', 2)
     monkeypatch.setattr(solution, 'REVENUE_CAT_PARAMS', dict(
         iterations=20, depth=3, learning_rate=.1, max_ctr_complexity=1
@@ -17,9 +17,11 @@ def fitted(monkeypatch):
     monkeypatch.setattr(solution, 'REVENUE_LGB_PARAMS', dict(
         n_estimators=20, num_leaves=7, min_child_samples=5
     ))
-    monkeypatch.setattr(candidate, 'GATE_PARAMS', dict(
+    gate_params = dict(
         iterations=20, depth=3, learning_rate=.1, max_ctr_complexity=1
-    ))
+    )
+    monkeypatch.setattr(candidate, 'GATE_PARAMS', gate_params)
+    monkeypatch.setattr(solution, 'HURDLE_GATE_PARAMS', gate_params)
     rng = np.random.default_rng(42)
     size = 60
     frame = pd.DataFrame({name: rng.integers(1, 1000, size).astype(float)
@@ -34,7 +36,10 @@ def fitted(monkeypatch):
     target = np.r_[np.linspace(1, 6, 15), np.linspace(8, 16, 45)]
     frame['revenue'] = np.expm1(target)
     frame['rating'] = np.resize(['Low', 'Medium', 'High'], size)
-    model = candidate.SoftHurdleRevenueRegressor().fit(frame, target)
+    model_class = (candidate.SoftHurdleRevenueRegressor
+                   if request.param == "saved_candidate"
+                   else solution.SoftHurdleRevenueRegressor)
+    model = model_class().fit(frame, target)
     return model, frame, target
 
 
@@ -68,9 +73,20 @@ def test_saved_candidate_round_trip(fitted, tmp_path):
 
 
 def test_saved_candidate_single_group_fallback(fitted):
-    _, frame, target = fitted
+    fitted_model, frame, target = fitted
     normal = target > np.log1p(1000)
-    model = candidate.SoftHurdleRevenueRegressor().fit(frame.iloc[normal], target[normal])
+    model = type(fitted_model)().fit(frame.iloc[normal], target[normal])
     assert not model.active_
     np.testing.assert_array_equal(model.predict(frame.iloc[:5]),
                                   np.maximum(0, model.baseline_.predict(frame.iloc[:5])))
+
+
+def test_submission_preserves_saved_candidate_recipe(fitted):
+    model, frame, target = fitted
+    other_class = (solution.SoftHurdleRevenueRegressor
+                   if isinstance(model, candidate.SoftHurdleRevenueRegressor)
+                   else candidate.SoftHurdleRevenueRegressor)
+    other = other_class().fit(frame, target)
+    query = frame.iloc[[1, 20, 40]].drop(columns=['revenue', 'rating'])
+    np.testing.assert_allclose(model.predict(query), other.predict(query),
+                               rtol=1e-12, atol=1e-12)
