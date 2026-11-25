@@ -25,7 +25,7 @@ python3 z5429763.py <train_file> <test_file>
 - `z5429763_regression.csv`：`imdb_id,revenue`
 - `z5429763_classification.csv`：`imdb_id,rating`
 
-脚本独立训练收入回归的软混合模型，以及评级分类的 CatBoost 模型。回归以收入≤1000和>1000训练两个区间专家，用特征预测的低收入概率在log1p空间软混合，再与整体模型各占50%；整体模型和区间专家均使用CatBoost＋LightGBM。实体目标均值严格在各自拟合分区内五折交叉生成。分类保留扩展的目标无关元数据特征，限制类别组合复杂度为1。每个模型使用4个CPU线程，无GPU或外部下载。预测不读取目标列，不按测试真实收入选择专家；分类不使用收入或收入编码。测试文件可以完全没有`revenue`、`rating`两列。输出文件会被本次运行覆盖。
+脚本独立训练精简的收入软分区模型与CatBoost评级分类器。收入≤1000和>1000的两个专家均使用500树/深度6的CatBoost＋276树的LightGBM，以350树/深度5门控预测的低收入概率在log1p空间加权；不再额外拟合整体收入模型。评级分类器使用350树/深度6及原有特征与SqrtBalanced类权重。实体收入均值仍严格在各自拟合分区内五折交叉生成。每个模型使用4个CPU线程，无GPU或外部下载。预测不读取目标列，不按测试真实收入选择专家；分类不使用收入或收入编码。测试文件可以完全没有`revenue`、`rating`两列。输出文件会被本次运行覆盖。
 
 ## 重现 Notebook
 
@@ -94,9 +94,9 @@ python experiments/discussion_validation.py <train_file> --output /tmp/discussio
 
 仅读取传入的训练文件，重新拟合旧/新生产模型并复核42、2026、2718三个划分，不读取提供测试集。此开发实验及Notebook的多模型耗时不属于正式CLI的两分钟计时。
 
-## 已接入正式脚本的软分区模型
+## CSE超时后的精简模型
 
-已有验证中有效的是50%整体模型与50%区间软混合，硬路由未采用。该方案现已接入自包含的`z5429763.py`，Notebook第10节包含完整的当前指标复核代码及真实输出。历史研究候选、权重保存与验证证据见[SOFT_HURDLE_SAVED.md](SOFT_HURDLE_SAVED.md)。CSE测试按用户安排暂缓。
+用户对2816b72全量软混合版实测CSE总耗时255.06秒，超出120秒要求。现保留软分区，去掉外层整体模型并减少回归、门控和分类树数；精简经过三个训练内划分复核。方法、性能取舍和实际耗时见[COMPACT_RUNTIME.md](COMPACT_RUNTIME.md)，Notebook第11节有自包含复核代码与真实输出。原50%整体模型＋50%区间软混合及其已保存权重作为历史版本保留，见[SOFT_HURDLE_SAVED.md](SOFT_HURDLE_SAVED.md)。
 
 复核当前固定模型的train、val和提供test指标（不执行调参）：
 

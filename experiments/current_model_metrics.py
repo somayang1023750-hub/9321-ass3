@@ -50,10 +50,10 @@ def development_metrics(train):
     )
     fitting, validation = train.iloc[fit], train.iloc[val]
     started = perf_counter()
-    regressor = solution.SoftHurdleRevenueRegressor().fit(
+    regressor = solution.make_current_regressor().fit(
         fitting, np.log1p(fitting.revenue.to_numpy())
     )
-    classifier = solution.EnrichedRatingClassifier().fit(fitting, fitting.rating)
+    classifier = solution.make_current_classifier().fit(fitting, fitting.rating)
     fit_seconds = perf_counter() - started
     metrics = {}
     for name, frame in [("train", fitting), ("val", validation)]:
@@ -66,7 +66,6 @@ def development_metrics(train):
         ]}, flush=True)
     inputs = validation.drop(columns=["revenue", "rating"])
     truth = np.log1p(validation.revenue.to_numpy())
-    old = np.maximum(0, regressor.baseline_.predict(inputs))
     new = regressor.predict(inputs)
     groups = {}
     for name, mask in {
@@ -77,7 +76,6 @@ def development_metrics(train):
     }.items():
         groups[name] = dict(
             rows=int(mask.sum()),
-            baseline_RMSLE=float(np.sqrt(np.mean((truth[mask] - old[mask]) ** 2))),
             current_RMSLE=float(np.sqrt(np.mean((truth[mask] - new[mask]) ** 2))),
         )
     return dict(
@@ -86,17 +84,16 @@ def development_metrics(train):
         fit_indices_sha256=hashlib.sha256(fit.astype("<i8").tobytes()).hexdigest(),
         val_indices_sha256=hashlib.sha256(val.astype("<i8").tobytes()).hexdigest(),
         fit_seconds=fit_seconds, metrics=metrics,
-        baseline_val_RMSLE=float(np.sqrt(np.mean((truth - old) ** 2))),
         validation_groups=groups,
     )
 
 
 def final_metrics(train, test_file, output_dir):
     started = perf_counter()
-    regressor = solution.SoftHurdleRevenueRegressor().fit(
+    regressor = solution.make_current_regressor().fit(
         train, np.log1p(train.revenue.to_numpy())
     )
-    classifier = solution.EnrichedRatingClassifier().fit(train, train.rating)
+    classifier = solution.make_current_classifier().fit(train, train.rating)
     fit_seconds = perf_counter() - started
     # Open the test file only after the final models have finished fitting.
     test = pd.read_csv(test_file)
@@ -136,13 +133,13 @@ def audit(train_file, test_file, report_path, output_dir):
     freeze_path = report_path.with_name(report_path.stem + "_freeze.json")
     frozen = dict(
         frozen_at_utc=datetime.now(timezone.utc).isoformat(),
-        model="SoftHurdleRevenueRegressor + EnrichedRatingClassifier",
+        model="CompactHurdleRevenueRegressor + CompactRatingClassifier",
         source_sha256=sha256(solution.__file__), train_sha256=sha256(train_file),
-        income_threshold=1000, baseline_fraction=0.5, hurdle_fraction=0.5,
-        gate_params=solution.HURDLE_GATE_PARAMS,
-        cat_params=solution.REVENUE_CAT_PARAMS,
+        income_threshold=1000, baseline_fraction=0.0, hurdle_fraction=1.0,
+        gate_params=solution.COMPACT_GATE_PARAMS,
+        cat_params=solution.COMPACT_REVENUE_CAT_PARAMS,
         light_params=solution.REVENUE_LGB_PARAMS,
-        classifier_params=dict(solution.CLASSIFICATION_PARAMS, max_ctr_complexity=1),
+        classifier_params=solution.COMPACT_CLASSIFICATION_PARAMS,
         classifier_class_weights="SqrtBalanced", seed=solution.SEED,
         threads=solution.THREADS, python=platform.python_version(),
         packages={name: version(name) for name in [

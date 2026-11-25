@@ -72,8 +72,10 @@
 
 ## 8. 当前性能限制（2026-11-25更新）
 
-软混合方案已接入正式脚本。当前seed42训练内Val RMSLE为1.826482，分类Macro F1为0.775005；全量重训后提供Test分别为1.930587、0.745810。参数先固定、Test只评分，未用Test调参。回归仍高于1.7，分类在提供Test上的余量较小。完整Train/Val/Test口径与分数见CURRENT_MODEL_METRICS.md、experiments/current_model_metrics.json和Notebook第10节。
+当前为精简软分区模型。seed42的Val RMSLE为1.840734，Macro F1为0.768874；提供Test为1.941241、0.738150。参数先冻结、Test只评分。回归仍高于1.7，提供Test分类略低于0.74；本次以小幅精度取舍降低耗时。完整口径见CURRENT_MODEL_METRICS.md、COMPACT_RUNTIME.md及Notebook第11节。
+
+上一完整软混合2816b72的Val为1.826482、0.775005，提供Test为1.930587、0.745810，用户CSE实测255.06秒。历史完整候选的6折CV收益不能作为当前精简模型的CV结果。
 
 前版回归在seed42/2026/2718的训练内RMSLE分别为1.8308、1.7362、1.9077；分类Macro F1分别为0.7750、0.7612、0.7514。这些是DISCUSSION_IMPROVEMENTS.md和Notebook第9节对应的历史模型结果，不能作为当前软混合模型在所有划分上的结果。更早阶段见NEW_REGRESSION_EXPERIMENTS.md、REGRESSION_EXPERIMENTS.md。
 
-用户在CSE对旧提交451354e实测92.62秒；本次更新后需重新计时。Notebook分析分仍由老师评定，不能由功能测试或模型分数推定满分。
+用户在CSE对旧提交451354e实测92.62秒、对2816b72实测255.06秒；当前精简版需重新计时。Notebook分析分仍由老师评定，不能由功能测试或模型分数推定满分。

@@ -8,7 +8,7 @@ import z5429763 as solution
 from experiments import soft_hurdle_model as candidate
 
 
-@pytest.fixture(params=["saved_candidate", "submission"])
+@pytest.fixture(params=["saved_candidate", "submission", "compact"])
 def fitted(monkeypatch, request):
     monkeypatch.setattr(solution, 'THREADS', 2)
     monkeypatch.setattr(solution, 'REVENUE_CAT_PARAMS', dict(
@@ -22,6 +22,10 @@ def fitted(monkeypatch, request):
     )
     monkeypatch.setattr(candidate, 'GATE_PARAMS', gate_params)
     monkeypatch.setattr(solution, 'HURDLE_GATE_PARAMS', gate_params)
+    monkeypatch.setattr(solution, 'COMPACT_GATE_PARAMS', gate_params)
+    monkeypatch.setattr(solution, 'COMPACT_REVENUE_CAT_PARAMS', dict(
+        iterations=20, depth=3, learning_rate=.1, max_ctr_complexity=1
+    ))
     rng = np.random.default_rng(42)
     size = 60
     frame = pd.DataFrame({name: rng.integers(1, 1000, size).astype(float)
@@ -36,9 +40,11 @@ def fitted(monkeypatch, request):
     target = np.r_[np.linspace(1, 6, 15), np.linspace(8, 16, 45)]
     frame['revenue'] = np.expm1(target)
     frame['rating'] = np.resize(['Low', 'Medium', 'High'], size)
-    model_class = (candidate.SoftHurdleRevenueRegressor
-                   if request.param == "saved_candidate"
-                   else solution.SoftHurdleRevenueRegressor)
+    model_class = {
+        'saved_candidate': candidate.SoftHurdleRevenueRegressor,
+        'submission': solution.SoftHurdleRevenueRegressor,
+        'compact': solution.CompactHurdleRevenueRegressor,
+    }[request.param]
     model = model_class().fit(frame, target)
     return model, frame, target
 
@@ -81,6 +87,7 @@ def test_saved_candidate_single_group_fallback(fitted):
                                   np.maximum(0, model.baseline_.predict(frame.iloc[:5])))
 
 
+@pytest.mark.parametrize('fitted', ['saved_candidate', 'submission'], indirect=True)
 def test_submission_preserves_saved_candidate_recipe(fitted):
     model, frame, target = fitted
     other_class = (solution.SoftHurdleRevenueRegressor

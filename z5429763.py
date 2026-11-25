@@ -381,6 +381,9 @@ class ReferenceRevenueRegressor:
     target-derived input features are used.
     """
 
+    def __init__(self, cat_params=None):
+        self.cat_params = None if cat_params is None else dict(cat_params)
+
     def _features(self, df, fitting=False):
         return regression_preprocess(df)
 
@@ -391,7 +394,7 @@ class ReferenceRevenueRegressor:
         features = self._features(df, fitting=True)
         cat_features = self._cat_features(df, features, log_revenue, fitting=True)
         self.cat_model = CatBoostRegressor(
-            **REVENUE_CAT_PARAMS,
+            **(self.cat_params if self.cat_params is not None else REVENUE_CAT_PARAMS),
             loss_function="RMSE",
             random_seed=SEED,
             thread_count=THREADS,
@@ -509,6 +512,57 @@ class SoftHurdleRevenueRegressor:
         return np.maximum(0, 0.5 * baseline + 0.5 * mixture)
 
 
+COMPACT_REVENUE_CAT_PARAMS = dict(
+    iterations=500, depth=6, learning_rate=0.08, l2_leaf_reg=10,
+    max_ctr_complexity=1,
+)
+COMPACT_GATE_PARAMS = dict(
+    iterations=350, depth=5, learning_rate=0.08, l2_leaf_reg=10,
+    max_ctr_complexity=1,
+)
+COMPACT_CLASSIFICATION_PARAMS = dict(
+    iterations=350, depth=6, learning_rate=0.1, l2_leaf_reg=5,
+    max_ctr_complexity=1,
+)
+
+
+class CompactHurdleRevenueRegressor:
+    """Two compact income experts and a gate, without an extra overall fit."""
+
+    @staticmethod
+    def _expert():
+        return TargetEncodedRevenueRegressor(cat_params=COMPACT_REVENUE_CAT_PARAMS)
+
+    def fit(self, df, log_revenue):
+        target = np.asarray(log_revenue, dtype=float)
+        low = target <= np.log1p(1000)
+        self.active_ = int(low.sum()) >= 2 and int((~low).sum()) >= 2
+        if not self.active_:
+            self.baseline_ = self._expert().fit(df, target)
+            return self
+        self.feature_builder_ = RevenueRegressor()
+        features = self.feature_builder_._features(df, fitting=True)
+        self.gate_ = CatBoostClassifier(
+            **COMPACT_GATE_PARAMS, loss_function="Logloss", random_seed=SEED,
+            thread_count=THREADS, verbose=False, allow_writing_files=False,
+        ).fit(
+            features, low.astype(int), cat_features=categorical_columns(features),
+        )
+        self.low_ = self._expert().fit(df.iloc[low], target[low])
+        self.high_ = self._expert().fit(df.iloc[~low], target[~low])
+        return self
+
+    def predict(self, df):
+        if not self.active_:
+            return np.maximum(0, self.baseline_.predict(df))
+        probability = self.gate_.predict_proba(
+            self.feature_builder_._features(df)
+        )[:, 1]
+        low = np.clip(self.low_.predict(df), 0, np.log1p(1000))
+        high = np.maximum(np.log1p(1000), self.high_.predict(df))
+        return np.maximum(0, probability * low + (1 - probability) * high)
+
+
 def categorical_columns(features: pd.DataFrame) -> list[str]:
     return features.select_dtypes(include=["object", "string"]).columns.tolist()
 
@@ -554,6 +608,23 @@ class EnrichedRatingClassifier:
         return self.model_.predict(self.feature_builder_._features(df)).reshape(-1)
 
 
+class CompactRatingClassifier(EnrichedRatingClassifier):
+    def fit(self, df, rating):
+        self.feature_builder_ = RevenueRegressor()
+        features = self.feature_builder_._features(df, fitting=True)
+        self.model_ = make_classifier(**COMPACT_CLASSIFICATION_PARAMS)
+        self.model_.fit(features, rating, cat_features=categorical_columns(features))
+        return self
+
+
+def make_current_regressor():
+    return CompactHurdleRevenueRegressor()
+
+
+def make_current_classifier():
+    return CompactRatingClassifier()
+
+
 def revenue_from_log(predictions: np.ndarray) -> np.ndarray:
     # Float overflow protection only; no clipping based on test target values.
     return np.maximum(0.0, np.expm1(np.clip(predictions, 0.0, 50.0)))
@@ -562,8 +633,8 @@ def revenue_from_log(predictions: np.ndarray) -> np.ndarray:
 def train_predict(
     train_df: pd.DataFrame, test_df: pd.DataFrame
 ) -> tuple[np.ndarray, np.ndarray]:
-    regressor = SoftHurdleRevenueRegressor()
-    classifier = EnrichedRatingClassifier()
+    regressor = make_current_regressor()
+    classifier = make_current_classifier()
     regressor.fit(train_df, np.log1p(train_df["revenue"]).to_numpy())
     classifier.fit(train_df, train_df["rating"])
     revenue = revenue_from_log(regressor.predict(test_df))

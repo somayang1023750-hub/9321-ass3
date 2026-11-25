@@ -1,0 +1,128 @@
+{
+  "selection_seed": 42,
+  "provided_test_used": false,
+  "trials": [
+    {
+      "seed": 42,
+      "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+      "baseline_source_sha256": "15ee3aa4b6ca68b7e03716c027da36381cc0877eca795d66cfb376f48efdf9eb",
+      "fit_rows": 12803,
+      "val_rows": 3201,
+      "threads": 4,
+      "gate_params": {
+        "iterations": 350,
+        "depth": 5,
+        "learning_rate": 0.08,
+        "l2_leaf_reg": 10,
+        "max_ctr_complexity": 1
+      },
+      "reg_params": {
+        "iterations": 700,
+        "depth": 6,
+        "learning_rate": 0.08,
+        "l2_leaf_reg": 10,
+        "max_ctr_complexity": 1
+      },
+      "light_params": {
+        "n_estimators": 276,
+        "num_leaves": 63,
+        "learning_rate": 0.025,
+        "min_child_samples": 20,
+        "reg_lambda": 20,
+        "colsample_bytree": 0.9
+      },
+      "cls_params": {
+        "iterations": 450,
+        "depth": 6,
+        "learning_rate": 0.1,
+        "l2_leaf_reg": 5,
+        "max_ctr_complexity": 1
+      },
+      "results": [
+        {
+          "task": "regression",
+          "trees": 300,
+          "RMSLE": 1.8475641179886342,
+          "tiny_RMSLE": 5.692554284945693,
+          "other_RMSLE": 1.5369846534532732
+        },
+        {
+          "task": "regression",
+          "trees": 500,
+          "RMSLE": 1.8407344920691675,
+          "tiny_RMSLE": 5.691332924107408,
+          "other_RMSLE": 1.5286343335666803
+        },
+        {
+          "task": "regression",
+          "trees": 700,
+          "RMSLE": 1.837653026752045,
+          "tiny_RMSLE": 5.69620318653893,
+          "other_RMSLE": 1.524128034581114
+        },
+        {
+          "task": "classification",
+          "trees": 250,
+          "MacroF1": 0.7661659166061106,
+          "accuracy": 0.880349890659169
+        },
+        {
+          "task": "classification",
+          "trees": 350,
+          "MacroF1": 0.7688740724069127,
+          "accuracy": 0.8840987191502655
+        },
+        {
+          "task": "classification",
+          "trees": 450,
+          "MacroF1": 0.7687739418214342,
+          "accuracy": 0.8847235238987816
+        }
+      ],
+      "gate_seconds": 6.7317266210002344,
+      "low_seconds": 3.230622916000357,
+      "high_seconds": 14.772384656000213,
+      "classification_max_trees_seconds": 19.136624055000084
+    },
+    {
+      "seed": 42,
+      "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+      "params": {
+        "iterations": 500,
+        "depth": 5,
+        "learning_rate": 0.08,
+        "l2_leaf_reg": 5,
+        "max_ctr_complexity": 1
+      },
+      "seconds": 21.70671303500012,
+      "results": [
+        {
+          "trees": 350,
+          "MacroF1": 0.7541849753406283,
+          "accuracy": 0.872852233676976
+        },
+        {
+          "trees": 500,
+          "MacroF1": 0.7634035529765287,
+          "accuracy": 0.8794126835363949
+        }
+      ]
+    }
+  ],
+  "selection": {
+    "regression_trees": 500,
+    "regression_depth": 6,
+    "regression_learning_rate": 0.08,
+    "gate_trees": 350,
+    "gate_depth": 5,
+    "classification_trees": 350,
+    "classification_depth": 6,
+    "classification_learning_rate": 0.1,
+    "reasons": [
+      "Remove the extra all-income model to reduce duplicate fits.",
+      "500 regression trees are within0.0031 RMSLE of700 on the development split.",
+      "The350-tree depth6 classifier has the best primary-screen MacroF1.",
+      "Depth5 classification scored lower; no test labels were used to make this choice."
+    ]
+  }
+}

@@ -1,13 +1,13 @@
 {
   "date": "2026-11-25",
   "environment": "Cloud CPU, Python3.13.5, pinned dependencies, 4 threads",
-  "source_sha256": "15ee3aa4b6ca68b7e03716c027da36381cc0877eca795d66cfb376f48efdf9eb",
+  "source_sha256": "a54f88aea0947f563f2481822037c96619928ce417b500cd5917692c59d7c155",
   "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
   "test_sha256": "642908219983de25bdd50f6c3226da6f51ffe53b0656f1cc07228a1997a9fb28",
-  "seconds": 118.94441702300037,
+  "seconds": 49.45699457000046,
   "exit_code": 0,
-  "stdout": "Wrote 2287 predictions per task in 117.35s\n",
-  "stderr": "mkdir -p failed for path /home/agent/.config/matplotlib: [Errno 30] Read-only file system: '/home/agent/.config/matplotlib'\nMatplotlib created a temporary cache directory at /tmp/matplotlib-hjcxigda because there was an issue with the default path (/home/agent/.config/matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.\n",
+  "stdout": "Wrote 2287 predictions per task in 48.01s\n",
+  "stderr": "mkdir -p failed for path /home/agent/.config/matplotlib: [Errno 30] Read-only file system: '/home/agent/.config/matplotlib'\nMatplotlib created a temporary cache directory at /tmp/matplotlib-e0w4gy7j because there was an issue with the default path (/home/agent/.config/matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.\n",
   "outputs": {
     "regression": {
       "rows": 2287,
@@ -15,7 +15,7 @@
         "imdb_id",
         "revenue"
       ],
-      "sha256": "d297394e8f1712ab409f45480fda05bcb61b1a4433e1fc869707848935f0ff81",
+      "sha256": "70578fe549e8b9b55a1fe4360aafa5eb579c41938d712dc13f073a8e15f43087",
       "exact_audit_match": true
     },
     "classification": {
@@ -24,7 +24,7 @@
         "imdb_id",
         "rating"
       ],
-      "sha256": "483bb22d5bc2c3be408a5f3ee0485f8ee8a60fed1af77d5e781f1df65cc78f25",
+      "sha256": "c463970bc95ff878e3352171c602d652cde4ec17f021c993408a52269e4241dc",
       "exact_audit_match": true
     }
   },

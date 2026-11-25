@@ -1,0 +1,17 @@
+{
+  "standard_full_train_RMSLE": 1.448468925628223,
+  "OOF_entity_means_train_RMSLE": 1.5225594388097237,
+  "OOF_entity_means_and_LOO_counts_train_RMSLE": 1.3910803467207407,
+  "component_CatBoost_learn_RMSE": {
+    "overall": 1.553415440637537,
+    "low": 0.38839965481584227,
+    "high": 1.211902585126173
+  },
+  "notes": [
+    "Only train.csv and previously saved full-train weights were used.",
+    "Saved weights reproduce the current full-train RMSLE within 1e-12.",
+    "No estimator was refit; only external OOF means and LOO counts were reconstructed.",
+    "Re-prediction still uses CatBoost inference CTRs; it is not the original training loss.",
+    "All these scores are in-sample, not independent generalization estimates."
+  ]
+}

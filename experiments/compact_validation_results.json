@@ -1,0 +1,91 @@
+{
+  "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+  "source_sha256": "a54f88aea0947f563f2481822037c96619928ce417b500cd5917692c59d7c155",
+  "selection_seed": 42,
+  "confirmation_seeds": [
+    2026,
+    2718
+  ],
+  "configuration": "Pure compact soft hurdle, fixed before confirmation",
+  "regression_params": {
+    "iterations": 500,
+    "depth": 6,
+    "learning_rate": 0.08,
+    "l2_leaf_reg": 10,
+    "max_ctr_complexity": 1
+  },
+  "gate_params": {
+    "iterations": 350,
+    "depth": 5,
+    "learning_rate": 0.08,
+    "l2_leaf_reg": 10,
+    "max_ctr_complexity": 1
+  },
+  "classification_params": {
+    "iterations": 350,
+    "depth": 6,
+    "learning_rate": 0.1,
+    "l2_leaf_reg": 5,
+    "max_ctr_complexity": 1
+  },
+  "threads": 4,
+  "results": [
+    {
+      "seed": 42,
+      "regression_fit_seconds": 19.97250517700013,
+      "classification_fit_seconds": 17.49019350100025,
+      "metrics": {
+        "train": {
+          "rows": 12803,
+          "RMSLE": 1.457950400501545,
+          "MacroF1": 0.8804331152792028,
+          "accuracy": 0.9404826993673358
+        },
+        "val": {
+          "rows": 3201,
+          "RMSLE": 1.8407344920691675,
+          "MacroF1": 0.7688740724069127,
+          "accuracy": 0.8840987191502655
+        }
+      }
+    },
+    {
+      "seed": 2026,
+      "regression_fit_seconds": 20.091665485000703,
+      "classification_fit_seconds": 18.16164621000007,
+      "metrics": {
+        "train": {
+          "rows": 12803,
+          "RMSLE": 1.5287715151097288,
+          "MacroF1": 0.8758995808996297,
+          "accuracy": 0.9418886198547215
+        },
+        "val": {
+          "rows": 3201,
+          "RMSLE": 1.7303292266212007,
+          "MacroF1": 0.7577227175561436,
+          "accuracy": 0.8890971571383942
+        }
+      }
+    },
+    {
+      "seed": 2718,
+      "regression_fit_seconds": 19.33168258800015,
+      "classification_fit_seconds": 17.21375496100063,
+      "metrics": {
+        "train": {
+          "rows": 12803,
+          "RMSLE": 1.4660301980012505,
+          "MacroF1": 0.8784097405876782,
+          "accuracy": 0.9389986721862064
+        },
+        "val": {
+          "rows": 3201,
+          "RMSLE": 1.9038396508992916,
+          "MacroF1": 0.7561368359185995,
+          "accuracy": 0.8787878787878788
+        }
+      }
+    }
+  ]
+}

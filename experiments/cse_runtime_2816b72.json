@@ -1,0 +1,12 @@
+{
+  "commit": "2816b72d4fe5a36f190e3cf26cfb05e1ae11acfb",
+  "source": "User-provided CSE terminal output, 2026-11-25",
+  "total_seconds": 255.06,
+  "script_seconds": 241.07,
+  "exit_code": 0,
+  "regression_csv_lines": 2288,
+  "classification_csv_lines": 2288,
+  "predictions_per_task": 2287,
+  "limit_seconds": 120,
+  "machine_cpu_configuration": "Not independently verified"
+}

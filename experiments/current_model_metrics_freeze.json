@@ -1,22 +1,22 @@
 {
-  "frozen_at_utc": "2026-11-25T04:58:35.771108+00:00",
-  "model": "SoftHurdleRevenueRegressor + EnrichedRatingClassifier",
-  "source_sha256": "15ee3aa4b6ca68b7e03716c027da36381cc0877eca795d66cfb376f48efdf9eb",
+  "frozen_at_utc": "2026-11-25T05:28:09.805243+00:00",
+  "model": "CompactHurdleRevenueRegressor + CompactRatingClassifier",
+  "source_sha256": "a54f88aea0947f563f2481822037c96619928ce417b500cd5917692c59d7c155",
   "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
   "income_threshold": 1000,
-  "baseline_fraction": 0.5,
-  "hurdle_fraction": 0.5,
+  "baseline_fraction": 0.0,
+  "hurdle_fraction": 1.0,
   "gate_params": {
-    "iterations": 650,
-    "depth": 6,
-    "learning_rate": 0.05,
+    "iterations": 350,
+    "depth": 5,
+    "learning_rate": 0.08,
     "l2_leaf_reg": 10,
     "max_ctr_complexity": 1
   },
   "cat_params": {
-    "iterations": 1200,
-    "depth": 7,
-    "learning_rate": 0.04,
+    "iterations": 500,
+    "depth": 6,
+    "learning_rate": 0.08,
     "l2_leaf_reg": 10,
     "max_ctr_complexity": 1
   },
@@ -29,9 +29,9 @@
     "colsample_bytree": 0.9
   },
   "classifier_params": {
-    "iterations": 650,
+    "iterations": 350,
     "depth": 6,
-    "learning_rate": 0.06,
+    "learning_rate": 0.1,
     "l2_leaf_reg": 5,
     "max_ctr_complexity": 1
   },
