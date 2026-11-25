@@ -93,3 +93,7 @@ python experiments/discussion_validation.py <train_file> --output /tmp/discussio
 ```
 
 仅读取传入的训练文件，重新拟合旧/新生产模型并复核42、2026、2718三个划分，不读取提供测试集。此开发实验及Notebook的多模型耗时不属于正式CLI的两分钟计时。
+
+## 独立保存的软分区研究候选
+
+已有验证中有效的是50%当前模型与50%区间软混合，不是硬路由。其源码、验证证据及保存/加载方式见[SOFT_HURDLE_SAVED.md](SOFT_HURDLE_SAVED.md)。此候选单独保存，正式CLI模型未切换；CSE测试按用户安排暂缓。

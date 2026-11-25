@@ -1,0 +1,52 @@
+{
+  "candidate": "soft_hurdle_v1",
+  "output": "log1p(revenue)",
+  "training_rows": 16004,
+  "low_rows": 500,
+  "normal_rows": 15504,
+  "income_threshold": 1000,
+  "baseline_fraction": 0.5,
+  "hurdle_fraction": 0.5,
+  "gate_params": {
+    "iterations": 650,
+    "depth": 6,
+    "learning_rate": 0.05,
+    "l2_leaf_reg": 10,
+    "max_ctr_complexity": 1
+  },
+  "cat_params": {
+    "iterations": 1200,
+    "depth": 7,
+    "learning_rate": 0.04,
+    "l2_leaf_reg": 10,
+    "max_ctr_complexity": 1
+  },
+  "light_params": {
+    "n_estimators": 276,
+    "num_leaves": 63,
+    "learning_rate": 0.025,
+    "min_child_samples": 20,
+    "reg_lambda": 20,
+    "colsample_bytree": 0.9
+  },
+  "training_threads": 4,
+  "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+  "model_sha256": "396bbfb97d89b625beac8c90b98fda675b43c90a4153a18a6e63c6dc65ffea04",
+  "source_sha256": {
+    "z5429763.py": "9f1b23a0866975c0b2c4e9b0c9b990d4b52ec29a95bf1f195b4c0cdf4f8aa5c0",
+    "experiments/soft_hurdle_model.py": "6222cb908cfc4d136b9241d0d03c8f4cc27cd9800fefec55fd145af74cdbb84c"
+  },
+  "python_version": "3.13.5",
+  "package_versions": {
+    "numpy": "2.4.4",
+    "pandas": "3.0.2",
+    "scikit-learn": "1.8.0",
+    "catboost": "1.2.10",
+    "lightgbm": "4.6.0",
+    "joblib": "1.5.3"
+  },
+  "fit_seconds": 75.75479691599992,
+  "artifact_bytes": 35613147,
+  "persistence_check": "reload predictions agree within 1e-12",
+  "evaluation": "Full-data refit; validation metrics belong to prior OOF fits"
+}

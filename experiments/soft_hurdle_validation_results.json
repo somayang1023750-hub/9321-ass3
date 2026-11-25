@@ -1,0 +1,143 @@
+{
+  "candidate": "soft_hurdle_v1",
+  "baseline_commit": "1377c47bf913269653e2e8a1ab7b186f54d5da2b",
+  "historical_validation_date": "2026-11-15",
+  "training_threads": 2,
+  "recipe": "0.5 baseline + 0.5 (p*low + (1-p)*high), in log1p revenue",
+  "income_threshold": 1000,
+  "results": [
+    {
+      "repeat_seed": 20261115,
+      "n_splits": 3,
+      "source_sha256": "9f1b23a0866975c0b2c4e9b0c9b990d4b52ec29a95bf1f195b4c0cdf4f8aa5c0",
+      "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+      "recipe": "0.5 current + 0.5 raw-probability hurdle, threshold1000; no CV-dependent tuning",
+      "folds": [
+        {
+          "fold": 0,
+          "fitting_rows": 10669,
+          "validation_rows": 5335,
+          "baseline_RMSLE": 1.907366215272437,
+          "blend_RMSLE": 1.8963459434814367,
+          "seconds": 94.24819678200038
+        },
+        {
+          "fold": 1,
+          "fitting_rows": 10669,
+          "validation_rows": 5335,
+          "baseline_RMSLE": 1.8558409622036218,
+          "blend_RMSLE": 1.8468783217415443,
+          "seconds": 93.04526042900034
+        },
+        {
+          "fold": 2,
+          "fitting_rows": 10670,
+          "validation_rows": 5334,
+          "baseline_RMSLE": 1.8378863279021875,
+          "blend_RMSLE": 1.8242821400376061,
+          "seconds": 95.05114066100032
+        }
+      ],
+      "pooled_rows": 16004,
+      "baseline_pooled_RMSLE": 1.8672652118403377,
+      "blend_pooled_RMSLE": 1.856081422060518,
+      "improvement_95CI": [
+        0.007072839930897629,
+        0.015011318634311821
+      ],
+      "gate_OOF_AUC": 0.9273243034055727,
+      "gate_OOF_AP": 0.5234540784749098,
+      "groups": {
+        "tiny": {
+          "rows": 500,
+          "baseline_RMSLE": 6.029402440684149,
+          "blend_RMSLE": 6.018502460855094
+        },
+        "other": {
+          "rows": 15504,
+          "baseline_RMSLE": 1.5577954409722117,
+          "blend_RMSLE": 1.545308283923987
+        },
+        "unknown_budget": {
+          "rows": 6456,
+          "baseline_RMSLE": 2.270496770007354,
+          "blend_RMSLE": 2.2597724127646703
+        },
+        "known_budget": {
+          "rows": 9548,
+          "baseline_RMSLE": 1.5357468041686164,
+          "blend_RMSLE": 1.5236704972037958
+        }
+      }
+    },
+    {
+      "repeat_seed": 20261116,
+      "n_splits": 3,
+      "source_sha256": "9f1b23a0866975c0b2c4e9b0c9b990d4b52ec29a95bf1f195b4c0cdf4f8aa5c0",
+      "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+      "recipe": "0.5 current + 0.5 raw-probability hurdle, threshold1000; no CV-dependent tuning",
+      "folds": [
+        {
+          "fold": 0,
+          "fitting_rows": 10669,
+          "validation_rows": 5335,
+          "baseline_RMSLE": 1.9169418898933595,
+          "blend_RMSLE": 1.9080256087340441,
+          "seconds": 95.08373879000101
+        },
+        {
+          "fold": 1,
+          "fitting_rows": 10669,
+          "validation_rows": 5335,
+          "baseline_RMSLE": 1.8393604950431697,
+          "blend_RMSLE": 1.828625988304732,
+          "seconds": 91.32535543000085
+        },
+        {
+          "fold": 2,
+          "fitting_rows": 10670,
+          "validation_rows": 5334,
+          "baseline_RMSLE": 1.8471436312907963,
+          "blend_RMSLE": 1.837597362750194,
+          "seconds": 94.72193356400021
+        }
+      ],
+      "pooled_rows": 16004,
+      "baseline_pooled_RMSLE": 1.8681423445090963,
+      "blend_pooled_RMSLE": 1.8584234559010788,
+      "improvement_95CI": [
+        0.006105928597309457,
+        0.013265108067839648
+      ],
+      "gate_OOF_AUC": 0.9243298503611972,
+      "gate_OOF_AP": 0.5251508055573048,
+      "groups": {
+        "tiny": {
+          "rows": 500,
+          "baseline_RMSLE": 6.014876193813238,
+          "blend_RMSLE": 6.045160577748112
+        },
+        "other": {
+          "rows": 15504,
+          "baseline_RMSLE": 1.560689304183274,
+          "blend_RMSLE": 1.544858053048418
+        },
+        "unknown_budget": {
+          "rows": 6456,
+          "baseline_RMSLE": 2.277425052906176,
+          "blend_RMSLE": 2.2688658189549202
+        },
+        "known_budget": {
+          "rows": 9548,
+          "baseline_RMSLE": 1.530589659195108,
+          "blend_RMSLE": 1.5193119083639
+        }
+      }
+    }
+  ],
+  "notes": [
+    "These are historical OOF comparisons, not scores on full-data fitted weights.",
+    "Repeats share data; intervals condition on already fitted models.",
+    "Official test targets were not used for selection or these results."
+  ]
+}
