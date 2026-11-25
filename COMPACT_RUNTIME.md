@@ -39,7 +39,7 @@
 python experiments/compact_validation.py <train_file> --output /tmp/compact-validation.json
 ```
 
-完整Train/Val/Test指标见CURRENT_MODEL_METRICS.md。完整CLI云端实测49.457秒，对照旧版118.944秒减少约58.4%；CSE仍需复测。完整计时与CSV契约见VALIDATION.md。旧完整模型的指标和计时另存为experiments/full_hurdle_metrics.json与experiments/full_hurdle_cli.json。
+完整Train/Val/Test指标见CURRENT_MODEL_METRICS.md。完整CLI云端实测49.457秒，对照旧版118.944秒减少约58.4%；用户随后在CSE实测734edab为96.87秒、exit0，相对旧版255.06秒减少约62.0%，本次低于120秒上限。完整计时与CSV契约见VALIDATION.md。旧完整模型的指标和计时另存为experiments/full_hurdle_metrics.json与experiments/full_hurdle_cli.json。
 
 ## Train与Val/Test差距的解释
 

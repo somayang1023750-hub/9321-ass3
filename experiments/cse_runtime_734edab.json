@@ -1,0 +1,15 @@
+{
+  "commit": "734edab53461b8835227519b9b8781ffc3adf1b3",
+  "source": "User-provided CSE terminal output, 2026-11-25",
+  "version_line": "734edab (HEAD -> main, origin/main, origin/HEAD) Reduce soft-hurdle runtime after CSE timeout",
+  "script_stdout": "Wrote 2287 predictions per task in 92.65s",
+  "total_seconds": 96.87,
+  "script_seconds": 92.65,
+  "exit_code": 0,
+  "predictions_per_task_reported": 2287,
+  "limit_seconds": 120,
+  "within_limit": true,
+  "output_directory": "~/ass3-check",
+  "csv_line_counts_independently_verified": false,
+  "note": "The timing command omitted wc -l; absence of line-count output does not mean CSV files were absent."
+}

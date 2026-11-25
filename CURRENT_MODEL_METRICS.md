@@ -41,4 +41,4 @@ python experiments/current_model_metrics.py <train_file> <test_file> \
 
 此开发审计分别训练开发模型与全量模型，耗时不等于一次正式CLI。Notebook第11节内嵌同一逻辑并保留真实输出，前面历史章节保留各阶段原始输出。正式提交只依赖z5429763.py与已执行的z5429763.ipynb，不读取预存权重或experiments模块。
 
-本版完整CLI云端实测49.457秒、exit0，相对完整软混合118.944秒减少约58.4%。35项测试及输出契约见VALIDATION.md。旧版CSE255.06秒不能作为本版耗时；本版仍需CSE复测。
+本版完整CLI云端实测49.457秒、exit0，相对完整软混合118.944秒减少约58.4%。35项测试及输出契约见VALIDATION.md。用户已对734edab在CSE复测：96.87秒、exit0，低于120秒上限；旧版为255.06秒。原始记录见experiments/cse_runtime_734edab.json。

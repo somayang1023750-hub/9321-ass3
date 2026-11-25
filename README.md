@@ -96,7 +96,7 @@ python experiments/discussion_validation.py <train_file> --output /tmp/discussio
 
 ## CSE超时后的精简模型
 
-用户对2816b72全量软混合版实测CSE总耗时255.06秒，超出120秒要求。现保留软分区，去掉外层整体模型并减少回归、门控和分类树数；精简经过三个训练内划分复核。方法、性能取舍和实际耗时见[COMPACT_RUNTIME.md](COMPACT_RUNTIME.md)，Notebook第11节有自包含复核代码与真实输出。原50%整体模型＋50%区间软混合及其已保存权重作为历史版本保留，见[SOFT_HURDLE_SAVED.md](SOFT_HURDLE_SAVED.md)。
+用户对2816b72全量软混合版实测CSE总耗时255.06秒，超出120秒要求。现保留软分区，去掉外层整体模型并减少回归、门控和分类树数；精简经过三个训练内划分复核，734edab在CSE实测96.87秒、exit0，满足本次120秒要求。方法、性能取舍和实际耗时见[COMPACT_RUNTIME.md](COMPACT_RUNTIME.md)，Notebook第11节有自包含复核代码与真实输出。原50%整体模型＋50%区间软混合及其已保存权重作为历史版本保留，见[SOFT_HURDLE_SAVED.md](SOFT_HURDLE_SAVED.md)。
 
 复核当前固定模型的train、val和提供test指标（不执行调参）：
 
