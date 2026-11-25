@@ -1,0 +1,40 @@
+{
+  "seed": 42,
+  "train_sha256": "20a3615781e7cdbaae417754913398f3ab6be2d15fda7e506b50859eca846632",
+  "source_sha256": "4248e9da597b05a5c94ab54b1a926eef4d734fa15ee0c83eb9e58ee1d883be51",
+  "regression_flagged_rows": 17,
+  "classification_flagged_rows": 53,
+  "classification_thresholds": {
+    "0.25": {
+      "High": 7.7,
+      "Low": 4.7,
+      "Medium": 6.1
+    },
+    "0.75": {
+      "High": 8.1,
+      "Low": 5.54025,
+      "Medium": 7.0
+    }
+  },
+  "notes": [
+    "Flags indicate feature/label discordance, not proven bad labels.",
+    "Validation rows remain unchanged and uniformly scored.",
+    "Only estimator/gate sample weights change; strict OOF target encoding remains unchanged."
+  ],
+  "results": [
+    {
+      "factor": 0.5,
+      "RMSLE": 1.8411368104397474,
+      "MacroF1": 0.7693620747825025,
+      "regression_seconds": 24.17131198900006,
+      "classification_seconds": 15.976619103999838
+    },
+    {
+      "factor": 0.75,
+      "RMSLE": 1.8447183800368316,
+      "MacroF1": 0.7642320269182034,
+      "regression_seconds": 21.72997551300068,
+      "classification_seconds": 15.978840932999447
+    }
+  ]
+}

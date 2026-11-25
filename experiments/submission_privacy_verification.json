@@ -1,0 +1,13 @@
+{
+  "scope": "Contents of the two submission files; required external filenames retained",
+  "personal_identifier_occurrences": 0,
+  "model_AST_unchanged": true,
+  "original_python_sha256": "a54f88aea0947f563f2481822037c96619928ce417b500cd5917692c59d7c155",
+  "anonymous_python_sha256": "4248e9da597b05a5c94ab54b1a926eef4d734fa15ee0c83eb9e58ee1d883be51",
+  "anonymous_notebook_sha256": "30e2fd29b308d34f3cf46e61e99b4e64ccb344e3202257ee10cd04beee399e8e",
+  "notebook_bytes": 369944,
+  "retained_code_outputs": 14,
+  "image_metadata_checked": 2,
+  "loader_check": "Standalone first notebook cell loads companion script without a personal identifier",
+  "tests_passed": 37
+}

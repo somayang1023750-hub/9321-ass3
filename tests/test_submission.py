@@ -154,6 +154,32 @@ def test_notebook_is_executed_and_within_submission_limit():
         assert not any(output["output_type"] == "error" for output in cell["outputs"])
 
 
+def test_submission_contents_exclude_personal_identifiers():
+    for path in [MODULE, MODULE.with_suffix('.ipynb')]:
+        content = path.read_text()
+        assert MODULE.stem not in content
+        assert MODULE.stem.removeprefix('z') not in content
+        assert 'somayang1023750' not in content.casefold()
+
+
+def test_notebook_loads_companion_without_embedded_student_id(movies, tmp_path, monkeypatch):
+    import json
+    import shutil
+
+    script = tmp_path / MODULE.name
+    shutil.copyfile(MODULE, script)
+    training = tmp_path / 'training input.csv'
+    movies.to_csv(training, index=False)
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv('ASSIGNMENT_DATA_ARGS', f'"{training}" "unused prediction input.csv"')
+    notebook = json.loads(MODULE.with_suffix('.ipynb').read_text())
+    first = next(cell for cell in notebook['cells'] if cell['cell_type'] == 'code')
+    namespace = {'__name__': 'companion_loader_check'}
+    exec(compile(''.join(first['source']), '<notebook setup>', 'exec'), namespace)
+    assert Path(namespace['solution'].__file__).resolve() == script.resolve()
+    assert len(namespace['train']) == len(movies)
+
+
 def _load_proposal_experiment():
     path = MODULE.parent / "experiments" / "proposal_validation.py"
     module_spec = importlib.util.spec_from_file_location("proposal_experiment", path)

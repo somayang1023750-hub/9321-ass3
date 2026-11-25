@@ -1,6 +1,6 @@
 """Train movie revenue/rating models and write the two assignment CSV files.
 
-Usage: python3 z5429763.py <train_file> <test_file>
+Usage: python3 <script_file> <train_file> <test_file>
 Only the training file is used for fitting; test targets are never read as features.
 """
 
